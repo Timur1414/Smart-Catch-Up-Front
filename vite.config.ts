@@ -5,15 +5,15 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname: string = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig(({ command, mode }) => {
-    const env = loadEnv(mode, process.cwd(), "");
-    const is_dev = command === "serve";
-    const is_debug = env.DEBUG === "true";
-    const port = env.PORT ? Number(env.PORT) : 5173;
+    const env: Record<string, string> = loadEnv(mode, process.cwd(), "");
+    const is_dev: boolean = command === "serve";
+    const is_debug: boolean = env.DEBUG === "true";
+    const port: number = env.PORT ? Number(env.PORT) : 5173;
 
-    const server = {
+    const server: any = {
         host: true,
         port: port,
         strictPort: true,
@@ -24,8 +24,8 @@ export default defineConfig(({ command, mode }) => {
     };
 
     if (is_dev && !is_debug) {
-        let cert_file = env.CERT_FILE;
-        let key_file = env.KEY_FILE;
+        let cert_file: string = env.CERT_FILE;
+        let key_file: string = env.KEY_FILE;
         if (cert_file && key_file) {
             server.https = {
                 key: fs.readFileSync(path.resolve(__dirname, key_file)),
