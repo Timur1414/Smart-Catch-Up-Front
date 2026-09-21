@@ -5,3 +5,13 @@ body {
     background: linear-gradient(#1A2E3A, #14546C, #1B7EC4) no-repeat;
     font-family: 'Nunito', sans-serif;
 }
+
+#main-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#app {
+    text-align: center;
+    width: 100%;
+}
