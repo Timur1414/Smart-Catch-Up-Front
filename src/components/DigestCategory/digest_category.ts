@@ -9,9 +9,8 @@ export class DigestCategory extends BaseComponent {
 
     _addEventListeners() {
         const element: HTMLElement | null = this.getElement();
-        if (!element) {
+        if (!element)
             return;
-        }
         this._on(element, "click", () => {
             element.classList.toggle("digest-category_open");
             let arrow: HTMLImageElement | null = element.querySelector<HTMLImageElement>(".digest-category_header_arrow");

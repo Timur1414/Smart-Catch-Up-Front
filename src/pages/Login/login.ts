@@ -9,11 +9,10 @@ export class LoginPage extends BasePage {
         let compiledTemplate = Handlebars.compile(template);
         root.innerHTML = compiledTemplate({}).trim();
 
-        let login_form = new LoginForm({});
+        let login_form: LoginForm = new LoginForm({});
         let form_root: HTMLElement | null = root.querySelector<HTMLElement>(".login_container");
-        if (!form_root) {
+        if (!form_root)
             return;
-        }
         login_form.render(form_root);
     }
 }

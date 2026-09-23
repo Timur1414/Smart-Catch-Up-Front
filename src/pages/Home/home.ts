@@ -7,13 +7,11 @@ import {DigestCategory} from "../../components/DigestCategory/digest_category.ts
 export class HomePage extends BasePage {
     async render(root: HTMLElement): Promise<void> {
         let compiledTemplate = Handlebars.compile(template);
-        let html = compiledTemplate({}).trim();
-        root.innerHTML = html;
+        root.innerHTML = compiledTemplate({}).trim();
 
-        let digest_category_root = root.querySelector<HTMLElement>(".home_content");
-        if (!digest_category_root) {
+        let digest_category_root: HTMLElement | null = root.querySelector<HTMLElement>(".home_content");
+        if (!digest_category_root)
             return;
-        }
         digest_category_root.innerText = "";
         for (let i = 0; i < 5; i++) {
             let component = new DigestCategory({
