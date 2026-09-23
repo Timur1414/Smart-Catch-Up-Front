@@ -15,3 +15,11 @@ body {
     text-align: center;
     width: 100%;
 }
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+input {
+    outline: none;
+}
