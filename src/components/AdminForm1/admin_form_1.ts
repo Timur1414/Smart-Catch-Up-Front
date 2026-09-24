@@ -7,6 +7,7 @@ export class AdminForm1 extends BaseComponent {
     constructor(props: any) {
         super(template, props);
     }
+
     render(container: HTMLElement) {
         super.render(container);
         const root: HTMLElement | null = container.querySelector<HTMLElement>(".admin_form_1_inputs");

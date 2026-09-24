@@ -23,9 +23,9 @@ export class SelectInput extends BaseComponent {
     private _value: string = "";
     private _isOpen: boolean = false;
     private _optionsList: SelectOption[] = [];
-    private _placeholderText: string = "Выберите вариант";
+    private readonly _placeholderText: string = "Выберите вариант";
     private _isDisabled: boolean = false;
-    private _onChangeCallback?: (value: string, option: SelectOption | null) => void;
+    private readonly _onChangeCallback?: (value: string, option: SelectOption | null) => void;
     private _onDocumentClick: ((event: MouseEvent) => void) | null = null;
 
     constructor(props: SelectInputProps) {
@@ -35,7 +35,7 @@ export class SelectInput extends BaseComponent {
 
         const normalizedOptions: SelectOption[] = (props.options || []).map((opt) => {
             if (typeof opt === "string" || typeof opt === "number") {
-                const str = String(opt);
+                const str: string = String(opt);
                 return {
                     value: str,
                     label: str,
@@ -49,8 +49,8 @@ export class SelectInput extends BaseComponent {
             };
         });
 
-        const selectedOption = normalizedOptions.find((opt) => opt.isSelected);
-        const placeholder = props.placeholder || "Выберите вариант";
+        const selectedOption: SelectOption | undefined = normalizedOptions.find((opt) => opt.isSelected);
+        const placeholder: string = props.placeholder || "Выберите вариант";
 
         super(template, {
             ...props,
@@ -78,7 +78,7 @@ export class SelectInput extends BaseComponent {
             event.preventDefault();
             if (this._isDisabled) return;
 
-            const selectedVal = target.getAttribute("data-value") ?? "";
+            const selectedVal: string = target.getAttribute("data-value") ?? "";
             this.setValue(selectedVal);
             this.close();
         });
@@ -115,7 +115,7 @@ export class SelectInput extends BaseComponent {
         }
 
         this._onDocumentClick = (event: MouseEvent) => {
-            const root = this.getElement();
+            const root: HTMLElement | null = this.getElement();
             if (root && !root.contains(event.target as Node)) {
                 this.close();
             }
@@ -128,10 +128,10 @@ export class SelectInput extends BaseComponent {
         if (this._isDisabled || this._isOpen) return;
 
         this._isOpen = true;
-        const root = this.getElement();
+        const root: HTMLElement | null = this.getElement();
         if (root) {
             root.classList.add("is-open");
-            const control = root.querySelector<HTMLElement>(".select-input_control");
+            const control: HTMLElement | null = root.querySelector<HTMLElement>(".select-input_control");
             control?.setAttribute("aria-expanded", "true");
         }
     }
@@ -140,10 +140,10 @@ export class SelectInput extends BaseComponent {
         if (!this._isOpen) return;
 
         this._isOpen = false;
-        const root = this.getElement();
+        const root: HTMLElement | null = this.getElement();
         if (root) {
             root.classList.remove("is-open");
-            const control = root.querySelector<HTMLElement>(".select-input_control");
+            const control: HTMLElement | null = root.querySelector<HTMLElement>(".select-input_control");
             control?.setAttribute("aria-expanded", "false");
         }
     }
@@ -161,18 +161,18 @@ export class SelectInput extends BaseComponent {
     }
 
     public getSelectedOption(): SelectOption | null {
-        return this._optionsList.find((opt) => String(opt.value) === this._value) ?? null;
+        return this._optionsList.find((opt: SelectOption): boolean => String(opt.value) === this._value) ?? null;
     }
 
     public setValue(value: string | number | null): void {
-        const strVal = value !== null && value !== undefined ? String(value) : "";
+        const strVal: string = value !== null && value !== undefined ? String(value) : "";
         this._value = strVal;
 
-        const selectedOption = this._optionsList.find((opt) => String(opt.value) === strVal) ?? null;
-        const root = this.getElement();
+        const selectedOption: SelectOption | null = this._optionsList.find((opt) => String(opt.value) === strVal) ?? null;
+        const root: HTMLElement | null = this.getElement();
 
         if (root) {
-            const textElement = root.querySelector<HTMLElement>(".select-input_selected_text");
+            const textElement: HTMLElement | null = root.querySelector<HTMLElement>(".select-input_selected_text");
             if (textElement) {
                 if (selectedOption) {
                     textElement.textContent = selectedOption.label;
@@ -183,17 +183,17 @@ export class SelectInput extends BaseComponent {
                 }
             }
 
-            const hiddenInput = root.querySelector<HTMLInputElement>(".select-input_hidden");
+            const hiddenInput: HTMLInputElement | null = root.querySelector<HTMLInputElement>(".select-input_hidden");
             if (hiddenInput) {
                 hiddenInput.value = this._value;
                 hiddenInput.dispatchEvent(new Event("change", { bubbles: true }));
                 hiddenInput.dispatchEvent(new Event("input", { bubbles: true }));
             }
 
-            const optionsElements = root.querySelectorAll<HTMLElement>(".select-input_option");
-            optionsElements.forEach((el) => {
-                const optVal = el.getAttribute("data-value");
-                const isSelected = optVal === strVal;
+            const optionsElements: NodeListOf<HTMLElement> = root.querySelectorAll<HTMLElement>(".select-input_option");
+            optionsElements.forEach((el: HTMLElement) => {
+                const optVal: string | null = el.getAttribute("data-value");
+                const isSelected: boolean = optVal === strVal;
                 el.classList.toggle("select-input_option_selected", isSelected);
                 el.setAttribute("aria-selected", isSelected ? "true" : "false");
             });
@@ -204,10 +204,10 @@ export class SelectInput extends BaseComponent {
 
     public setDisabled(disabled: boolean): void {
         this._isDisabled = disabled;
-        const root = this.getElement();
+        const root: HTMLElement | null = this.getElement();
         if (root) {
             root.classList.toggle("select-input_disabled", disabled);
-            const control = root.querySelector<HTMLElement>(".select-input_control");
+            const control: HTMLElement | null = root.querySelector<HTMLElement>(".select-input_control");
             control?.setAttribute("tabindex", disabled ? "-1" : "0");
         }
         if (disabled) {
@@ -216,12 +216,12 @@ export class SelectInput extends BaseComponent {
     }
 
     public setOptions(options: (SelectOption | string)[], selectedValue?: string | number | null): void {
-        const valToSelect = selectedValue !== undefined ? selectedValue : this._value;
-        const initialValue = valToSelect !== null && valToSelect !== undefined ? String(valToSelect) : "";
+        const valToSelect: string | number | null = selectedValue !== undefined ? selectedValue : this._value;
+        const initialValue: string = valToSelect !== null && valToSelect !== undefined ? String(valToSelect) : "";
 
-        this._optionsList = options.map((opt) => {
+        this._optionsList = options.map((opt: string | SelectOption) => {
             if (typeof opt === "string" || typeof opt === "number") {
-                const str = String(opt);
+                const str: string = String(opt);
                 return {
                     value: str,
                     label: str,
@@ -235,7 +235,7 @@ export class SelectInput extends BaseComponent {
             };
         });
 
-        const selectedOption = this._optionsList.find((opt) => opt.isSelected);
+        const selectedOption: SelectOption | undefined = this._optionsList.find((opt): boolean | undefined => opt.isSelected);
 
         this.update({
             options: this._optionsList,
@@ -249,8 +249,8 @@ export class SelectInput extends BaseComponent {
     private _selectNextOption(direction: 1 | -1): void {
         if (this._optionsList.length === 0) return;
 
-        const currentIndex = this._optionsList.findIndex((opt) => String(opt.value) === this._value);
-        let nextIndex = currentIndex + direction;
+        const currentIndex: number = this._optionsList.findIndex((opt: SelectOption): boolean => String(opt.value) === this._value);
+        let nextIndex: number = currentIndex + direction;
 
         if (nextIndex < 0) {
             nextIndex = this._optionsList.length - 1;
@@ -258,7 +258,7 @@ export class SelectInput extends BaseComponent {
             nextIndex = 0;
         }
 
-        const nextOption = this._optionsList[nextIndex];
+        const nextOption: SelectOption = this._optionsList[nextIndex];
         if (nextOption) {
             this.setValue(nextOption.value);
         }
