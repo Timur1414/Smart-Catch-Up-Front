@@ -23,3 +23,12 @@ body {
 input {
     outline: none;
 }
+
+button {
+    outline: none;
+}
+
+.page_header {
+    color: #0077FF;
+    font-size: 40px;
+}
