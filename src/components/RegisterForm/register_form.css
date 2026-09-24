@@ -1,4 +1,4 @@
-.login_content {
+.register_content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,16 +8,16 @@
     background-color: rgb(26 46 58 / 0.7);
 }
 
-.login_header {
+.register_header {
     color: white;
     font-size: 40px;
 }
 
-.login-form {
+.register-form {
     margin: 20px;
 }
 
-.login_label {
+.register_label {
     display: block;
     color: white;
     margin-top: 10px;
@@ -25,12 +25,12 @@
     position: relative;
 }
 
-.login-form_error {
+.register-form_error {
     margin-top: 5px;
     color: #E64646;
 }
 
-.login_input {
+.register_input {
     box-sizing: border-box;
     display: block;
     width: 100%;
@@ -41,11 +41,11 @@
     transition: border-color 0.3s ease-in-out;
 }
 
-.login_input:focus {
+.register_input:focus {
     border-color: #117cee;
 }
 
-.login-form_eye {
+.register-form_eye, .register-form_eye2 {
     cursor: pointer;
     width: 30px;
     position: absolute;
@@ -53,34 +53,17 @@
     top: 27px;
 }
 
-.login-form_forgot_password {
-    text-align: start;
-}
-
-.login-form_forgot_password_link {
-    margin-top: 40px;
-    margin-left: 0;
-    text-align: start;
-    text-decoration: none;
-    color: #59AAF1;
-    transition: color 0.3s ease-in-out;
-}
-
-.login-form_forgot_password_link:hover {
-    color: #71B7F3;
-}
-
-.login-form_register_link {
+.register-form_login_link {
     color: #59AAF1;
     text-decoration: none;
     transition: color 0.3s ease-in-out;
 }
 
-.login-form_register_link:hover {
+.register-form_login_link:hover {
     color: #71B7F3;
 }
 
-.login-form_register_block {
+.register-form_login_block {
     margin-top: 80px;
     display: flex;
     flex-direction: row;
@@ -88,7 +71,7 @@
     color: white;
 }
 
-.login_btn {
+.register_btn {
     box-sizing: border-box;
     width: 100%;
     margin: 20px 0;
@@ -99,17 +82,17 @@
     background-color: #18CDBE;
     border: 2px solid #4D7198;
     transition: background-color 0.3s ease-in-out,
-                border-color 0.3s ease-in-out;
+    border-color 0.3s ease-in-out;
 }
 
-.login_btn:focus {
+.register_btn:focus {
     border-color: #76ade8;
 }
 
-.login_btn:hover {
+.register_btn:hover {
     background-color: #27eedd;
 }
 
-.login_btn:disabled {
+.register_btn:disabled {
     background-color: rgb(24 205 190 / 0.4);
 }

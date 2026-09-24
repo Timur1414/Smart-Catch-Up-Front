@@ -1,0 +1,24 @@
+<div class="register_content">
+    <h1 class="register_header">Регистрация</h1>
+    <form class="register-form" action="/" method="post">
+        <label class="register_label"> Почта
+            <input id="register-form_email_input" class="register_input" type="email" name="email" placeholder="email">
+        </label>
+        <p class="register-form_error"></p>
+        <label class="register_label"> Пароль
+            <input id="register-form_password_input" class="register_input" type="password" name="password" placeholder="password">
+            <img class="register-form_eye" src="/icons/eye.png" alt="eye">
+        </label>
+        <p class="register-form_error"></p>
+        <label class="register_label"> Подтвердите пароль
+            <input id="register-form_password2_input" class="register_input" type="password" name="password" placeholder="password">
+            <img class="register-form_eye2" src="/icons/eye.png" alt="eye">
+        </label>
+        <p class="register-form_error"></p>
+        <div class="register-form_login_block">
+            <span>Уже есть аккаунт?</span>
+            <a class="register-form_login_link" href="/login">Войти</a>
+        </div>
+        <input class="register_btn" type="submit" value="Зарегистрироваться">
+    </form>
+</div>
