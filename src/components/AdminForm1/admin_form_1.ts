@@ -12,13 +12,21 @@ export class AdminForm1 extends BaseComponent {
         const root: HTMLElement | null = container.querySelector<HTMLElement>(".admin_form_1_inputs");
         if (!root)
             return;
-        const props: SelectInputProps = {
+        const select_type_input_props: SelectInputProps = {
             name: "notification_type",
             label: "Тип уведомления",
             placeholder: "Выберите тип уведомления",
             options: ["a", "b", "c"],
         };
-        const select = new SelectInput(props);
-        select.render(root);
+        const select_type_component = new SelectInput(select_type_input_props);
+        select_type_component.render(root);
+        const select_user_input_props: SelectInputProps = {
+            name: "user_id",
+            label: "Пользователь",
+            placeholder: "Выберите пользователя",
+            options: ["1", "2", "3"],
+        };
+        const select_user_component = new SelectInput(select_user_input_props);
+        select_user_component.render(root);
     }
 }

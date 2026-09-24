@@ -9,3 +9,19 @@
 .admin_form_1_inputs {
     width: 100%;
 }
+
+.admin_form_1_textarea {
+    box-sizing: border-box;
+    width: 100%;
+    resize: vertical;
+    font-size: 15px;
+    padding: 10px;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.admin_form_1_textarea:focus {
+    outline: none;
+    border-color: #8AA9C9;
+}
