@@ -1,0 +1,33 @@
+.profile_avatar_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.profile_avatar_img {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #4D7198;
+    border-radius: 50%;
+}
+
+.profile_avatar_change_btn {
+    margin: 20px;
+    padding: 10px;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    background-color: #0077FF;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out,
+                border-color 0.3s ease-in-out;
+}
+
+.profile_avatar_change_btn:hover {
+    background-color: #1A85FF;
+}
+
+.profile_avatar_change_btn:focus {
+    border-color: #8AA9C9;
+}

@@ -1,0 +1,47 @@
+.profile_container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 30%;
+}
+
+.profile_change_password {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    background-color: #0077FF;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out,
+                border-color 0.3s ease-in-out;
+}
+
+.profile_change_password:hover {
+    background-color: #1A85FF;
+}
+
+.profile_change_password:focus {
+    border-color: #8AA9C9;
+}
+
+.profile_exit_btn {
+    width: 30%;
+    margin-top: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    background-color: #E64646;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out,
+                border-color 0.3s ease-in-out;
+}
+
+.profile_exit_btn:hover {
+    background-color: #E95C5C;
+}
+
+.profile_exit_btn:focus {
+    border-color: #8AA9C9;
+}
