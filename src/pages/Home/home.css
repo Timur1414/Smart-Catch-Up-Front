@@ -1,0 +1,39 @@
+.home_top_btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+    margin: 50px auto;
+}
+
+.home_top_btn {
+    background-color: #0077FF;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    padding: 5px;
+    width: 35%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out,
+                border-color 0.3s ease-in-out;
+}
+
+.home_top_btn:hover {
+    background-color: #1A85FF;
+}
+
+.home_top_btn:focus {
+    border-color: #8AA9C9;
+}
+
+.home_top_btn.home_top_btn_selected {
+    background-color: #17D685;
+}
+
+.home_top_btn.home_top_btn_selected:hover {
+    background-color: #2EDD93;
+}
+
+.home_top_btn.home_top_btn_selected:focus {
+    border-color: #8AA9C9;
+}

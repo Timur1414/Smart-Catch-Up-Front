@@ -1,0 +1,25 @@
+.home_notifications_content {
+    width: 50%;
+    margin: auto;
+}
+
+.home_notifications_show_all_btn {
+    background-color: #17D685;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 30px;
+    width: 35%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
+}
+
+.home_notifications_show_all_btn:hover {
+    background-color: #2EDD93;
+}
+
+.home_notifications_show_all_btn:focus {
+    border-color: #8AA9C9;
+}
