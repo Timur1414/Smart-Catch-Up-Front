@@ -7,20 +7,33 @@ export interface UuidResponse extends SimpleResponse {
     request_id: string;
 }
 
+export interface TooManyRequestsResponse extends UuidResponse {
+    code: 429;
+}
+
 export interface ValidationErrorResponse extends UuidResponse {
+    code: 400;
     errors: {
         field: string;
         message: string;
     }[];
 }
 
-export interface ForbiddenResponse extends UuidResponse {}
+export interface ForbiddenResponse extends UuidResponse {
+    code: 403;
+}
 
-export interface UnauthorizedResponse extends UuidResponse {}
+export interface UnauthorizedResponse extends UuidResponse {
+    code: 401;
+}
 
-export interface ServerErrorResponse extends UuidResponse {}
+export interface ServerErrorResponse extends UuidResponse {
+    code: 500 | 0;
+}
 
-export interface LoginSuccessResponse extends UuidResponse {}
+export interface LoginSuccessResponse extends UuidResponse {
+    code: 200;
+}
 
 export interface LoginErrorResponse extends ValidationErrorResponse {}
 
