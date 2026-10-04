@@ -1,4 +1,5 @@
 .main-menu {
+    position: fixed;
     min-height: 100vh;
     max-width: 10vw;
     min-width: 100px;
