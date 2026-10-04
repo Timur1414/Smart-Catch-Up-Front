@@ -9,10 +9,32 @@ export class HomePage extends BasePage {
         let compiledTemplate = Handlebars.compile(template);
         root.innerHTML = compiledTemplate({}).trim();
 
-        let digest_root: HTMLElement | null = root.querySelector<HTMLElement>(".home_content");
-        if (!digest_root)
-            return;
         let digest: DigestComponent = new DigestComponent({});
-        digest.render(digest_root);
+
+        let btns: NodeListOf<HTMLButtonElement> = root.querySelectorAll<HTMLButtonElement>(".home_top_btn");
+        if (btns.length != 2)
+            return;
+        btns[0].onclick = (event: Event) => {
+            event.preventDefault();
+            const notification_root = root.querySelector<HTMLElement>(".home_content");
+            if (!notification_root)
+                return;
+            notification_root.innerHTML = "";
+            digest.render(notification_root);
+            btns[0].classList.add("home_top_btn_selected");
+            btns[1].classList.remove("home_top_btn_selected");
+        };
+        btns[1].onclick = (event: Event) => {
+            event.preventDefault();
+            const notification_root = root.querySelector<HTMLElement>(".home_content");
+            if (!notification_root)
+                return;
+            notification_root.innerHTML = "";
+            // digest.render(notification_root);
+            btns[0].classList.remove("home_top_btn_selected");
+            btns[1].classList.add("home_top_btn_selected");
+        };
+        btns[0].click();
+
     }
 }

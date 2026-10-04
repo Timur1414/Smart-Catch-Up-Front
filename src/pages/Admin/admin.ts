@@ -14,6 +14,8 @@ export class AdminPage extends BasePage {
         const form_n = new AdminFormN({});
 
         const btns: NodeListOf<HTMLElement> = root.querySelectorAll<HTMLElement>(".admin_top_btn");
+        if (btns.length != 2)
+            return;
         btns[0].onclick = (event: Event) => {
             event.preventDefault();
             const form_root = root.querySelector<HTMLElement>(".admin_content_form_container");
