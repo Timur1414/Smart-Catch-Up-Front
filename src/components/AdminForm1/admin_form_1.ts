@@ -30,4 +30,18 @@ export class AdminForm1 extends BaseComponent {
         const select_user_component = new SelectInput(select_user_input_props);
         select_user_component.render(root);
     }
+
+    _addEventListeners() {
+        const elem: HTMLElement | null = this.getElement();
+        if (!elem)
+            return;
+        const create_btn: HTMLButtonElement | null = elem.querySelector<HTMLButtonElement>(".admin_create_btn");
+        if (!create_btn)
+            return;
+        this._on(create_btn, "click", this.send_data);
+    }
+
+    async send_data(e: Event) {
+        console.log('click');
+    }
 }

@@ -23,4 +23,8 @@ export class Notifications extends BaseComponent {
             notification.render(notification_root);
         }
     }
+
+    load_notifications() {
+        console.log("Loading notifications");
+    }
 }

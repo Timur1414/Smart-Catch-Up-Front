@@ -30,4 +30,18 @@ export class AdminFormN extends BaseComponent {
         const multiselect_users_input_component = new MultiSelectInput(multiselect_users_props);
         multiselect_users_input_component.render(root);
     }
+
+    _addEventListeners() {
+        const elem: HTMLElement | null = this.getElement();
+        if (!elem)
+            return;
+        const create_btn: HTMLButtonElement | null = elem.querySelector<HTMLButtonElement>(".admin_create_btn");
+        if (!create_btn)
+            return;
+        this._on(create_btn, "click", this.send_data);
+    }
+
+    async send_data(e: Event) {
+        console.log('click');
+    }
 }

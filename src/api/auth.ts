@@ -6,19 +6,18 @@ import {
     UnauthorizedResponse
 } from "../types/interfaces.ts";
 
-export const login = async (email: string, password: string): Promise<{ success: boolean, message: string }> => {
+export const login = async (email: string, password: string): Promise<{ success: boolean, code: number, message: string }> => {
     try {
         const response: Response = await client("/auth/login", {
             method: "POST",
             body: JSON.stringify({email, password}),
         });
         const data: LoginSuccessResponse | ServerErrorResponse | TooManyRequestsResponse | UnauthorizedResponse = await response.json();
-        if (data.code === 200)
-            return {success: true, message: data.message};
-        return {success: false, message: data.message};
+        const success: boolean = data.code === 200;
+        return {success: success, code: data.code, message: data.message};
     }
-    catch {
-        return {success: false, message: "Network error"};
+    catch (error) {
+        return {success: false, code: 0, message: "Network error"};
     }
 };
 
@@ -40,7 +39,7 @@ export const logout = async (): Promise<boolean> => {
         });
         return response.ok;
     }
-    catch {
+    catch (error) {
         return false;
     }
 };
@@ -52,14 +51,13 @@ export const check_login = async (): Promise<boolean> => {
         });
         if (response.status === 401) {
             const is_refreshed: boolean = await refresh();
-            if (is_refreshed)
-                response = await client("/profile", { method: "GET" });
-            else
+            if (!is_refreshed)
                 return false;
+            response = await client("/profile", { method: "GET" });
         }
         return response.ok;
     }
-    catch {
+    catch (error) {
         return false;
     }
 };
