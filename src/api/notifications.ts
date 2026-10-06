@@ -14,8 +14,8 @@ const get_notifications_client = async (url: string): Promise<{code: number, dat
     try {
         let response: Response = await client(url, {method: "GET"});
         if (response.status === 401) {
-            const is_refreshed: boolean = await refresh();
-            if (!is_refreshed) {
+            const is_refreshed = await refresh();
+            if (!is_refreshed.success) {
                 const data: UnauthorizedResponse = await response.json();
                 return {code: 401, data: data};
             }

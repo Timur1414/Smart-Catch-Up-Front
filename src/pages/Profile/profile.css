@@ -45,3 +45,9 @@
 .profile_exit_btn:focus {
     border-color: #8AA9C9;
 }
+
+.profile_exit_btn:disabled {
+    background-color: rgb(89 170 241 / 0.4);
+    border-color: rgb(77 113 152 / 0.4);
+    cursor: not-allowed;
+}
