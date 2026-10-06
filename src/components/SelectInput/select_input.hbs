@@ -1,0 +1,28 @@
+<div class="select-input_container{{#if disabled}} select-input_disabled{{/if}}{{#if error}} select-input_invalid{{/if}}" data-name="{{name}}">
+    {{#if label}}
+        <label class="select-input_label">{{label}}</label>
+    {{/if}}
+    <div class="select-input_control" tabindex="{{#if disabled}}-1{{else}}0{{/if}}" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+        <span class="select-input_selected_text{{#unless selectedLabel}} select-input_placeholder{{/unless}}">
+            {{#if selectedLabel}}{{selectedLabel}}{{else}}{{placeholder}}{{/if}}
+        </span>
+        <img class="select-input_arrow" src="/icons/arrow.png" alt="arrow">
+    </div>
+    <div class="select-input_dropdown" role="listbox">
+        <ul class="select-input_options_list">
+            {{#each options}}
+                <li class="select-input_option{{#if this.isSelected}} select-input_option_selected{{/if}}" 
+                    data-value="{{this.value}}" 
+                    data-label="{{this.label}}"
+                    role="option"
+                    aria-selected="{{#if this.isSelected}}true{{else}}false{{/if}}">
+                    {{this.label}}
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <input type="hidden" class="select-input_hidden" name="{{name}}" value="{{selectedValue}}">
+    {{#if error}}
+        <p class="select-input_error">{{error}}</p>
+    {{/if}}
+</div>

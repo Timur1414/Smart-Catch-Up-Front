@@ -1,0 +1,50 @@
+.profile_edit_form {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 0;
+    color: #FFFFFF;
+    width: 100%;
+}
+
+.profile_edit_grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: center;
+    justify-items: start;
+}
+
+.profile_edit_input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 2px solid #4D7198;
+    background-color: #DEDEDE;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.profile_edit_input:focus {
+    border-color: #117CEE;
+}
+
+.profile_edit_send_btn {
+    width: 40%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #0077FF;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out,
+                border-color 0.3s ease-in-out;
+}
+
+.profile_edit_send_btn:hover {
+    background-color: #1A85FF;
+}
+
+.profile_edit_send_btn:focus {
+    border-color: #8AA9C9;
+}

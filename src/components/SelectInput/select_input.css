@@ -1,0 +1,149 @@
+.select-input_container {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    text-align: start;
+    user-select: none;
+    font-family: 'Nunito', sans-serif;
+}
+
+.select-input_label {
+    display: block;
+    width: 100%;
+    color: #FFFFFF;
+    font-size: 14px;
+    margin-bottom: 6px;
+    text-align: start;
+    box-sizing: border-box;
+}
+
+.select-input_control {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 100%;
+    padding: 10px 14px;
+    background-color: #FFFFFF;
+    border: 2px solid #66AAFF;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.25s ease-in-out,
+                box-shadow 0.25s ease-in-out;
+}
+
+.select-input_control:hover,
+.select-input_control:focus {
+    border-color: #117cee;
+}
+
+.select-input_container.is-open .select-input_control {
+    border-color: #17D685;
+    box-shadow: 0 0 0 2px rgba(23, 214, 133, 0.25);
+}
+
+.select-input_selected_text {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: #212121;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: start;
+}
+
+.select-input_selected_text.select-input_placeholder {
+    color: #8C8C8C;
+}
+
+.select-input_arrow {
+    width: 14px;
+    height: 14px;
+    margin-left: 10px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease-in-out;
+    pointer-events: none;
+}
+
+.select-input_container.is-open .select-input_arrow {
+    transform: rotate(-180deg);
+}
+
+.select-input_dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.select-input_container.is-open .select-input_dropdown {
+    display: block;
+}
+
+.select-input_options_list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+}
+
+.select-input_option {
+    padding: 10px 14px;
+    font-size: 15px;
+    color: #212121;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out,
+                color 0.15s ease-in-out;
+}
+
+.select-input_option:hover {
+    background-color: #E8F4FD;
+    color: #0077FF;
+}
+
+.select-input_option_selected {
+    background-color: #E2F9F0;
+    color: #12A163;
+    font-weight: 600;
+}
+
+.select-input_option_selected:hover {
+    background-color: #D3F5E7;
+    color: #12A163;
+}
+
+.select-input_container.select-input_disabled .select-input_control {
+    background-color: #EFEFEF;
+    border-color: #CCCCCC;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.select-input_container.select-input_invalid .select-input_control {
+    border-color: #E64646;
+}
+
+.select-input_error {
+    margin-top: 5px;
+    color: #E64646;
+    font-size: 12px;
+    text-align: start;
+}
