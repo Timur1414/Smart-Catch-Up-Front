@@ -22,3 +22,8 @@
     outline: none;
     border-color: #8AA9C9;
 }
+
+.admin_form_n_error {
+    margin-top: 5px;
+    color: #E64646;
+}

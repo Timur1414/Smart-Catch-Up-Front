@@ -1,7 +1,7 @@
-export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+export const SERVER_URL: string = import.meta.env.VITE_SERVER_URL;
 
-export const client = (url, data={}) => {
-    const options = {
+export const client = (url: string, data: RequestInit={}): Promise<Response> => {
+    const options: RequestInit = {
         credentials: "include",
         ...data,
         headers: {

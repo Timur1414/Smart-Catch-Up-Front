@@ -1,23 +1,8 @@
 import {BaseComponent} from "../base_component.ts";
 import template from "./multi_select_input.hbs?raw";
 import "./multi_select_input.css";
+import {MultiSelectInputProps, MultiSelectOption} from "../../types/props_interfaces.ts";
 
-export interface MultiSelectOption {
-    value: string | number;
-    label: string;
-    isSelected?: boolean;
-}
-
-export interface MultiSelectInputProps {
-    name?: string;
-    label?: string;
-    placeholder?: string;
-    options: (MultiSelectOption | string)[];
-    selectedValues?: (string | number)[] | null;
-    disabled?: boolean;
-    error?: string;
-    onChange?: (values: string[], options: MultiSelectOption[]) => void;
-}
 
 export class MultiSelectInput extends BaseComponent {
     private _selectedValues: Set<string> = new Set();
