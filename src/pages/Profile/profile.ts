@@ -6,6 +6,7 @@ import {ProfileAvatar} from "../../components/ProfileAvatar/profile_avatar.ts";
 import {ProfileEditForm} from "../../components/ProfileEditForm/profile_edit_form.ts";
 import {logout} from "../../api/auth.ts";
 import {router} from "../../main.ts";
+import {Modal, ModalProps} from "../../components/Modal/modal.ts";
 
 export class ProfilePage extends BasePage {
     async render(root: HTMLElement): Promise<void> {
@@ -34,6 +35,13 @@ export class ProfilePage extends BasePage {
         const response = await logout();
         logout_btn.disabled = false;
         if (!response.success) {
+            const modal_props: ModalProps = {
+                message: response.data.message,
+                title: "Ошибка",
+                autoRender: false,
+            };
+            const modal = new Modal(modal_props);
+            modal.open();
             return;
         }
         router.navigate("/");
