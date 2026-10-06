@@ -43,14 +43,14 @@ export function validate_min_value(count: string): {ok: boolean, message: string
 }
 
 export function validate_notification_type(type: string): {ok: boolean, message: string} {
-    if (!["a", "b", "c"].includes(type))
+    if (!["friend_request", "b", "c"].includes(type))
         return {ok: false, message: "Тип уведомления не поддерживается"};
     return {ok: true, message: ""};
 }
 
 export function validate_notification_types(types: string[]): {ok: boolean, message: string} {
     for (const type of types)
-        if (!["a", "b", "c"].includes(type))
+        if (!["friend_request", "b", "c"].includes(type))
             return {ok: false, message: "Тип уведомления не поддерживается"};
     return {ok: true, message: ""};
 }

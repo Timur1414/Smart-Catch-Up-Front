@@ -1,10 +1,11 @@
 import {BaseComponent} from "../base_component.ts";
 import template from "./admin_form_1.hbs?raw";
 import "./admin_form_1.css";
-import {SelectInput, SelectInputProps} from "../SelectInput/select_input.ts";
+import {SelectInput} from "../SelectInput/select_input.ts";
 import {validate_not_empty, validate_notification_type, validate_user_id} from "../../utils/validators.ts";
 import {generate_1} from "../../api/admin.ts";
 import {router} from "../../main.ts";
+import {SelectInputProps} from "../../types/props_interfaces.ts";
 
 export class AdminForm1 extends BaseComponent {
     constructor(props: any) {
@@ -20,7 +21,7 @@ export class AdminForm1 extends BaseComponent {
             name: "notification_type",
             label: "Тип уведомления",
             placeholder: "Выберите тип уведомления",
-            options: ["a", "b", "c"],
+            options: ["friend_request", "b", "c"],
         };
         const select_type_component = new SelectInput(select_type_input_props);
         select_type_component.render(root);

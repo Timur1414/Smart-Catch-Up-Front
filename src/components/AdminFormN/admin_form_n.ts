@@ -1,10 +1,11 @@
 import {BaseComponent} from "../base_component.ts";
 import template from "./admin_form_n.hbs?raw";
 import "./admin_form_n.css";
-import {MultiSelectInput, MultiSelectInputProps} from "../MultiSelectInput/multi_select_input.ts";
+import {MultiSelectInput} from "../MultiSelectInput/multi_select_input.ts";
 import {validate_min_value, validate_notification_types, validate_user_ids} from "../../utils/validators.ts";
 import {generate_n} from "../../api/admin.ts";
 import {router} from "../../main.ts";
+import {MultiSelectInputProps} from "../../types/props_interfaces.ts";
 
 export class AdminFormN extends BaseComponent {
     constructor(props: any) {
@@ -20,7 +21,7 @@ export class AdminFormN extends BaseComponent {
             name: "notification_types",
             label: "Типы уведомлений",
             placeholder: "Типы уведомлений",
-            options: ["a", "b", "c"],
+            options: ["friend_request", "b", "c"],
         };
         const multiselect_types_input_component = new MultiSelectInput(multiselect_types_props);
         multiselect_types_input_component.render(root);
