@@ -1,7 +1,8 @@
 import {BaseComponent} from "../base_component.ts";
 import template from "./login_form.hbs?raw";
 import "./login_form.css";
-import {validate_email} from "../../utils/validators.ts";
+import {login} from "../../api/auth.ts";
+import {router} from "../../main.ts";
 
 export class LoginForm extends BaseComponent {
     constructor(props: any) {
@@ -9,10 +10,7 @@ export class LoginForm extends BaseComponent {
     }
 
     _addEventListeners() {
-        const elem: HTMLElement | null = this.getElement();
-        if (!elem)
-            return;
-        const eye_btn: HTMLImageElement | null = elem.querySelector<HTMLImageElement>(".login-form_eye");
+        const eye_btn: HTMLImageElement | null | undefined = this.getElement()?.querySelector<HTMLImageElement>(".login-form_eye");
         if (!eye_btn)
             return;
         this._on(eye_btn, "click", (event: Event) => {
@@ -25,40 +23,30 @@ export class LoginForm extends BaseComponent {
             eye_btn.src = is_password ? "/icons/closed_eye.png" : "/icons/eye.png";
         });
 
-        const send_btn: HTMLElement | null = elem.querySelector<HTMLElement>(".login_btn");
+        const send_btn: HTMLElement | null | undefined = this.getElement()?.querySelector<HTMLElement>(".login_btn");
         if (!send_btn)
             return;
         this._on(send_btn, "click", this.send_data);
     }
 
-    validate_data(email: string, password: string): {ok: boolean, message: string}[] {
-        let errors: {ok: boolean; message: string}[] = [];
-        const email_error: {ok: boolean, message: string} = validate_email(email);
-        if (!email_error.ok) {
-            errors.push(email_error);
-            const email_error_elem = this.getElement()?.querySelector("");
-        }
-        const password_error: {ok: boolean, message: string} = validate_email(password);
-        if (!password_error.ok) {
-            errors.push(password_error);
-        }
-        return errors;
-    }
-
     async send_data(e: Event) {
-        const elem: HTMLElement | null = this.getElement();
-        if (!elem)
-            return;
-        const email_input: HTMLInputElement | null = elem.querySelector<HTMLInputElement>("#login-form_email_input");
+        e.preventDefault();
+        const email_input: HTMLInputElement | null | undefined = this.getElement()?.querySelector<HTMLInputElement>("#login-form_email_input");
         if (!email_input)
             return;
-        const password_input: HTMLInputElement | null = elem.querySelector<HTMLInputElement>("#login-form_password_input");
+        const password_input: HTMLInputElement | null | undefined = this.getElement()?.querySelector<HTMLInputElement>("#login-form_password_input");
         if (!password_input)
             return;
         const email_value: string = email_input.value.trim().toLowerCase();
         const password_value: string = password_input.value.trim();
-        const errors: {ok: boolean, message: string}[] = this.validate_data(email_value, password_value);
-        if (errors.length > 0)
+        const response = await login(email_value, password_value);
+        if (!response.success) {
+            const password_error_elem: HTMLElement | null | undefined = this.getElement()?.querySelector<HTMLElement>("#login-form_password_error");
+            if (!password_error_elem)
+                return false;
+            password_error_elem.innerText = response.data.message;
             return;
+        }
+        router.navigate("/");
     }
 }

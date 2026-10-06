@@ -39,7 +39,14 @@ export interface LoginErrorResponse extends ValidationErrorResponse {}
 
 export interface RegisterSuccessResponse extends UuidResponse {}
 
-export interface RegisterErrorResponse extends ValidationErrorResponse {}
+export interface RegisterErrorResponse {
+    code: 400 | 409;
+    message: string,
+    errors: {
+        field: string;
+        message: string;
+    }[];
+}
 
 export interface LogoutSuccessResponse extends UuidResponse {}
 

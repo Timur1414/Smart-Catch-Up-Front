@@ -24,7 +24,49 @@ export function validate_password(password: string): {ok: boolean, message: stri
 }
 
 export function validate_passwords_equal(password: string, confirm_password: string): {ok: boolean, message: string} {
-    if (password.trim() !== confirm_password.trim())
+    if (password !== confirm_password)
         return {ok: false, message: "Пароли не совпадают"};
+    return {ok: true, message: ""};
+}
+
+export function validate_not_empty(text: string): {ok: boolean, message: string} {
+    if (text === "")
+        return {ok: false, message: "Поле не может быть пустым"};
+    return {ok: true, message: ""};
+}
+
+export function validate_min_value(count: string): {ok: boolean, message: string} {
+    const count_int: number = Number(count);
+    if (isNaN(count_int) || count_int <= 0)
+        return {ok: false, message: "Значение должно быть положительным"};
+    return {ok: true, message: ""};
+}
+
+export function validate_notification_type(type: string): {ok: boolean, message: string} {
+    if (!["a", "b", "c"].includes(type))
+        return {ok: false, message: "Тип уведомления не поддерживается"};
+    return {ok: true, message: ""};
+}
+
+export function validate_notification_types(types: string[]): {ok: boolean, message: string} {
+    for (const type of types)
+        if (!["a", "b", "c"].includes(type))
+            return {ok: false, message: "Тип уведомления не поддерживается"};
+    return {ok: true, message: ""};
+}
+
+export function validate_user_id(user: string): {ok: boolean, message: string} {
+    const user_id: number = Number(user);
+    if (isNaN(user_id) || user_id <= 0)
+        return {ok: false, message: "Неверный Id пользователя"};
+    return {ok: true, message: ""};
+}
+
+export function validate_user_ids(users: string[]): {ok: boolean, message: string} {
+    for (const user of users) {
+        const user_id: number = Number(user);
+        if (isNaN(user_id) || user_id <= 0)
+            return {ok: false, message: "Неверный Id пользователя"};
+    }
     return {ok: true, message: ""};
 }

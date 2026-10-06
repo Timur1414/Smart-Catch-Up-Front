@@ -1,4 +1,4 @@
-import {NotificationsResponse, ServerErrorResponse, UnauthorizedResponse} from "../types/interfaces.ts";
+import {NotificationsResponse, ServerErrorResponse, UnauthorizedResponse} from "../types/responses_interfaces.ts";
 import {client} from "./client.ts";
 import {refresh} from "./auth.ts";
 
