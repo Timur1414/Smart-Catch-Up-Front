@@ -1,9 +1,10 @@
 import {BaseComponent} from "../base_component.ts";
 import template from "./main_menu.hbs?raw";
 import "./main_menu.css";
+import {MainMenuProps} from "../../types/props_interfaces.ts";
 
 export class MainMenu extends BaseComponent {
-    constructor(props: any) {
+    constructor(props: MainMenuProps) {
         super(template, props);
     }
 

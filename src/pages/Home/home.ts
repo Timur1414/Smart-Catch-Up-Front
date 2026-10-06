@@ -6,8 +6,10 @@ import {DigestComponent} from "../../components/Digest/digest.ts";
 import {Notifications} from "../../components/Notifications/notifications.ts";
 import {get_notifications} from "../../api/notifications.ts";
 import {router} from "../../main.ts";
-import {Modal, ModalProps} from "../../components/Modal/modal.ts";
+import {Modal} from "../../components/Modal/modal.ts";
 import {NotificationsResponse} from "../../types/responses_interfaces.ts";
+import {NotificationObject} from "../../types/objects_interfaces.ts";
+import {ModalProps} from "../../types/props_interfaces.ts";
 
 export class HomePage extends BasePage {
     async render(root: HTMLElement): Promise<void> {
@@ -33,7 +35,7 @@ export class HomePage extends BasePage {
 
         const digest: DigestComponent = new DigestComponent({});
         const notifications: Notifications = new Notifications({
-            notifications: notifications_data.notifications,
+            notifications: notifications_data.notifications as NotificationObject[],
         });
 
         const btns: NodeListOf<HTMLButtonElement> = root.querySelectorAll<HTMLButtonElement>(".home_top_btn");

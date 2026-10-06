@@ -1,23 +1,8 @@
 import {BaseComponent} from "../base_component.ts";
 import template from "./select_input.hbs?raw";
 import "./select_input.css";
+import {SelectInputProps, SelectOption} from "../../types/props_interfaces.ts";
 
-export interface SelectOption {
-    value: string | number;
-    label: string;
-    isSelected?: boolean;
-}
-
-export interface SelectInputProps {
-    name?: string;
-    label?: string;
-    placeholder?: string;
-    options: (SelectOption | string)[];
-    selectedValue?: string | number | null;
-    disabled?: boolean;
-    error?: string;
-    onChange?: (value: string, option: SelectOption | null) => void;
-}
 
 export class SelectInput extends BaseComponent {
     private _value: string = "";

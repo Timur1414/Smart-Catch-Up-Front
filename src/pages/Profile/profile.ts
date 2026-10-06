@@ -6,9 +6,10 @@ import {ProfileAvatar} from "../../components/ProfileAvatar/profile_avatar.ts";
 import {ProfileEditForm} from "../../components/ProfileEditForm/profile_edit_form.ts";
 import {logout} from "../../api/auth.ts";
 import {router} from "../../main.ts";
-import {Modal, ModalProps} from "../../components/Modal/modal.ts";
+import {Modal} from "../../components/Modal/modal.ts";
 import {get_profile} from "../../api/profile.ts";
 import {ProfileResponse} from "../../types/responses_interfaces.ts";
+import {ModalProps} from "../../types/props_interfaces.ts";
 
 export class ProfilePage extends BasePage {
     async render(root: HTMLElement): Promise<void> {

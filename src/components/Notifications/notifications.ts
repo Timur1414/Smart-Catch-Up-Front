@@ -2,11 +2,14 @@ import {BaseComponent} from "../base_component.ts";
 import template from "./notifications.hbs?raw";
 import "./notifications.css";
 import {Notification} from "../Notification/notification.ts";
+import {NotificationObject} from "../../types/objects_interfaces.ts";
+import {NotificationsProps} from "../../types/props_interfaces.ts";
+
 
 export class Notifications extends BaseComponent {
-    private notifications = [];
+    private notifications: NotificationObject[] = [];
 
-    constructor(props: any) {
+    constructor(props: NotificationsProps) {
         super(template, props);
         this.notifications = props.notifications;
     }

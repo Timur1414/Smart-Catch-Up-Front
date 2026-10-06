@@ -1,9 +1,10 @@
 import {BaseComponent} from "../base_component.ts";
 import template from "./digest_category.hbs?raw";
 import "./digest_category.css";
+import {DigestCategoryProps} from "../../types/props_interfaces.ts";
 
 export class DigestCategory extends BaseComponent {
-    constructor(props: any) {
+    constructor(props: DigestCategoryProps) {
         super(template, props);
     }
 

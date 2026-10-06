@@ -1,15 +1,9 @@
 import { BaseComponent } from "../base_component.ts";
 import template from "./modal.hbs?raw";
 import "./modal.css";
+import {ModalProps} from "../../types/props_interfaces.ts";
 
-export interface ModalProps {
-    message?: string;
-    title?: string;
-    buttonText?: string;
-    onClose?: () => void;
-    container?: HTMLElement;
-    autoRender?: boolean;
-}
+
 
 export class Modal extends BaseComponent {
     private _onCloseCallback?: () => void;
