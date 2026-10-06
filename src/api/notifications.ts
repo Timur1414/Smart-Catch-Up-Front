@@ -10,19 +10,19 @@ export const get_all_notifications = async () => {
     return await get_notifications_client("/notifications/all");
 };
 
-const get_notifications_client = async (url: string): Promise<{code: number, data: NotificationsResponse | ServerErrorResponse | UnauthorizedResponse}> => {
+const get_notifications_client = async (url: string): Promise<{success: boolean, code: number, data: NotificationsResponse | ServerErrorResponse | UnauthorizedResponse}> => {
     try {
         let response: Response = await client(url, {method: "GET"});
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success) {
                 const data: UnauthorizedResponse = await response.json();
-                return {code: 401, data: data};
+                return {success: false, code: 401, data: data};
             }
             response = await client(url, {method: "GET"});
         }
         const data: NotificationsResponse | ServerErrorResponse = await response.json();
-        return {code: data.code, data: data};
+        return {success: true, code: data.code, data: data};
     }
     catch (error: any) {
         const data: ServerErrorResponse = {
@@ -30,6 +30,6 @@ const get_notifications_client = async (url: string): Promise<{code: number, dat
             message: "Network error",
             request_id: "",
         }
-        return { code: 0, data: data };
+        return { success: false, code: 0, data: data };
     }
 };
