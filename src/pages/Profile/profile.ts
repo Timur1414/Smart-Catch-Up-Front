@@ -7,18 +7,46 @@ import {ProfileEditForm} from "../../components/ProfileEditForm/profile_edit_for
 import {logout} from "../../api/auth.ts";
 import {router} from "../../main.ts";
 import {Modal, ModalProps} from "../../components/Modal/modal.ts";
+import {get_profile} from "../../api/profile.ts";
+import {ProfileResponse} from "../../types/responses_interfaces.ts";
 
 export class ProfilePage extends BasePage {
     async render(root: HTMLElement): Promise<void> {
         const compiledTemplate = Handlebars.compile(template);
         root.innerHTML = compiledTemplate({}).trim();
 
+        const response = await get_profile();
+        if (response.code === 401) {
+            router.navigate("/login");
+            return;
+        }
+        if (response.code === 500 || response.code === 0) {
+            const modal_props: ModalProps = {
+                title: "Ошибка",
+                message: response.data.message,
+                autoRender: false,
+                onClose: () => {
+                    router.navigate("/");
+                },
+            };
+            const modal = new Modal(modal_props);
+            modal.open();
+            return;
+        }
+        const profile_data: ProfileResponse = response.data as ProfileResponse;
+
         const content_root: HTMLElement | null = root.querySelector<HTMLElement>(".profile_content");
         if (!content_root)
             return;
-        const avatar_component = new ProfileAvatar({});
+        const avatar_component = new ProfileAvatar({
+            url: profile_data.avatar_url,
+        });
         avatar_component.render(content_root);
-        const form_component = new ProfileEditForm({});
+        const form_component = new ProfileEditForm({
+            email: profile_data.email,
+            first_name: profile_data.first_name,
+            last_name: profile_data.last_name,
+        });
         form_component.render(content_root);
 
         const logout_btn: HTMLButtonElement | null = root.querySelector<HTMLButtonElement>(".profile_exit_btn");
