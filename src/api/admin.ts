@@ -8,7 +8,7 @@ import {
 } from "../types/responses_interfaces.ts";
 
 export const generate_1 = async (notification_type: string, text: string, user_id: number): Promise<{success: boolean, code: number, data: SimpleResponse | ValidationErrorResponse | ForbiddenResponse | ServerErrorResponse | UnauthorizedResponse}> => {
-    const body: string = JSON.stringify({notification_type, test: text, user_id});
+    const body: string = JSON.stringify({notification_type, text, user_id});
     return await generate_client("/admin/generate", body);
 };
 
