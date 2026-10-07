@@ -47,7 +47,7 @@ export class HomePage extends BasePage {
             if (!notification_root)
                 return;
             notification_root.innerHTML = "";
-            digest.render(notification_root);
+            notifications.render(notification_root);
             btns[0].classList.add("home_top_btn_selected");
             btns[1].classList.remove("home_top_btn_selected");
         };
@@ -57,7 +57,7 @@ export class HomePage extends BasePage {
             if (!notification_root)
                 return;
             notification_root.innerHTML = "";
-            notifications.render(notification_root);
+            digest.render(notification_root);
             btns[0].classList.remove("home_top_btn_selected");
             btns[1].classList.add("home_top_btn_selected");
         };
