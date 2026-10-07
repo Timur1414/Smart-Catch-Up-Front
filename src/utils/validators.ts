@@ -1,3 +1,5 @@
+import {get_allowed_notification_types} from "../store/store.ts";
+
 export function validate_email(email: string): {ok: boolean, message: string} {
     if (email.length == 0 || email.length >= 255)
         return {ok: false, message: "Некорректная длина почты"};
@@ -43,14 +45,16 @@ export function validate_min_value(count: string): {ok: boolean, message: string
 }
 
 export function validate_notification_type(type: string): {ok: boolean, message: string} {
-    if (!["friend_request", "b", "c"].includes(type))
+    const allowed_types: string[] = get_allowed_notification_types();
+    if (!allowed_types.includes(type))
         return {ok: false, message: "Тип уведомления не поддерживается"};
     return {ok: true, message: ""};
 }
 
 export function validate_notification_types(types: string[]): {ok: boolean, message: string} {
+    const allowed_types: string[] = get_allowed_notification_types();
     for (const type of types)
-        if (!["friend_request", "b", "c"].includes(type))
+        if (!allowed_types.includes(type))
             return {ok: false, message: "Тип уведомления не поддерживается"};
     return {ok: true, message: ""};
 }

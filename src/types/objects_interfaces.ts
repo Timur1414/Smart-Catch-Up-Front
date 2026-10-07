@@ -18,3 +18,8 @@ export interface UserObject {
     last_name: string;
     is_staff: boolean;
 }
+
+export interface ShortUserObject {
+    id: number;
+    full_name: string;
+}

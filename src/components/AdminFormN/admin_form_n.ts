@@ -5,7 +5,9 @@ import {MultiSelectInput} from "../MultiSelectInput/multi_select_input.ts";
 import {validate_min_value, validate_notification_types, validate_user_ids} from "../../utils/validators.ts";
 import {generate_n} from "../../api/admin.ts";
 import {router} from "../../main.ts";
-import {MultiSelectInputProps} from "../../types/props_interfaces.ts";
+import {MultiSelectInputProps, MultiSelectOption} from "../../types/props_interfaces.ts";
+import {get_allowed_notification_types, get_allowed_user_ids} from "../../store/store.ts";
+import {ShortUserObject} from "../../types/objects_interfaces.ts";
 
 export class AdminFormN extends BaseComponent {
     constructor(props: any) {
@@ -21,7 +23,7 @@ export class AdminFormN extends BaseComponent {
             name: "notification_types",
             label: "Типы уведомлений",
             placeholder: "Типы уведомлений",
-            options: ["friend_request", "b", "c"],
+            options: get_allowed_notification_types(),
         };
         const multiselect_types_input_component = new MultiSelectInput(multiselect_types_props);
         multiselect_types_input_component.render(root);
@@ -29,11 +31,20 @@ export class AdminFormN extends BaseComponent {
         multiselect_types_error.className = "admin_form_n_error";
         multiselect_types_error.id = "admin_form_n_types_error";
         root.appendChild(multiselect_types_error);
+        const users_options: MultiSelectOption[] = [];
+        const users: ShortUserObject[] = get_allowed_user_ids();
+        for (const user of users) {
+            if (user.full_name !== "")
+                users_options.push({
+                    value: user.id,
+                    label: user.full_name,
+                });
+        }
         const multiselect_users_props: MultiSelectInputProps = {
             name: "user_ids",
             label: "Пользователи",
             placeholder: "Пользователи",
-            options: ["1", "2", "3"],
+            options: users_options,
         };
         const multiselect_users_input_component = new MultiSelectInput(multiselect_users_props);
         multiselect_users_input_component.render(root);

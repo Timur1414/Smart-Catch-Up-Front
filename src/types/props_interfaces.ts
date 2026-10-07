@@ -32,7 +32,7 @@ export interface MultiSelectInputProps {
     name?: string;
     label?: string;
     placeholder?: string;
-    options: (MultiSelectOption | string)[];
+    options: (MultiSelectOption | string | number)[];
     selectedValues?: (string | number)[] | null;
     disabled?: boolean;
     error?: string;
@@ -66,7 +66,7 @@ export interface SelectInputProps {
     name?: string;
     label?: string;
     placeholder?: string;
-    options: (SelectOption | string)[];
+    options: (SelectOption | string | number)[];
     selectedValue?: string | number | null;
     disabled?: boolean;
     error?: string;

@@ -1,4 +1,4 @@
-import {NotificationsResponse, ServerErrorResponse, UnauthorizedResponse} from "../types/responses_interfaces.ts";
+import {AllowedNotificationTypesResponse, NotificationsResponse, ServerErrorResponse, UnauthorizedResponse} from "../types/responses_interfaces.ts";
 import {client} from "./client.ts";
 import {refresh} from "./auth.ts";
 
@@ -31,5 +31,23 @@ const get_notifications_client = async (url: string): Promise<{success: boolean,
             request_id: "",
         }
         return { success: false, code: 0, data: data };
+    }
+};
+
+export const get_allowed_notification_types = async (): Promise<string[]> => {
+    try {
+        let response: Response = await client("/notification_types", {method: "GET"});
+        if (response.status === 401) {
+            const is_refreshed = await refresh();
+            if (!is_refreshed.success)
+                return [];
+            response = await client("/notification_types", {method: "GET"});
+        }
+        const data: AllowedNotificationTypesResponse = await response.json();
+        return data.types;
+    }
+    catch (error: any) {
+        console.error(error);
+        return [];
     }
 };

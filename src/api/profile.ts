@@ -1,6 +1,7 @@
-import {ProfileResponse, ServerErrorResponse, UnauthorizedResponse} from "../types/responses_interfaces.ts";
+import {AllowedUserIdsResponse, ProfileResponse, ServerErrorResponse, UnauthorizedResponse} from "../types/responses_interfaces.ts";
 import {client} from "./client.ts";
 import {refresh} from "./auth.ts";
+import {ShortUserObject} from "../types/objects_interfaces.ts";
 
 export const get_profile = async (): Promise<{ success: boolean, code: number, data: ProfileResponse | UnauthorizedResponse | ServerErrorResponse }> => {
     try {
@@ -27,5 +28,23 @@ export const get_profile = async (): Promise<{ success: boolean, code: number, d
             request_id: "",
         };
         return {success: false, code: 0, data: data};
+    }
+};
+
+export const get_allowed_user_ids = async (): Promise<ShortUserObject[]> => {
+    try {
+        let response: Response = await client("/users_ids", {method: "GET"});
+        if (response.status === 401) {
+            const is_refreshed = await refresh();
+            if (!is_refreshed.success)
+                return [];
+            response = await client("/users_ids", {method: "GET"});
+        }
+        const data: AllowedUserIdsResponse = await response.json();
+        return data.users;
+    }
+    catch (error) {
+        console.log(error);
+        return [];
     }
 };

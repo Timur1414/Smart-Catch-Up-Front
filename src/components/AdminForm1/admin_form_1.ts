@@ -5,7 +5,9 @@ import {SelectInput} from "../SelectInput/select_input.ts";
 import {validate_not_empty, validate_notification_type, validate_user_id} from "../../utils/validators.ts";
 import {generate_1} from "../../api/admin.ts";
 import {router} from "../../main.ts";
-import {SelectInputProps} from "../../types/props_interfaces.ts";
+import { SelectInputProps, SelectOption} from "../../types/props_interfaces.ts";
+import {get_allowed_notification_types, get_allowed_user_ids} from "../../store/store.ts";
+import {ShortUserObject} from "../../types/objects_interfaces.ts";
 
 export class AdminForm1 extends BaseComponent {
     constructor(props: any) {
@@ -21,7 +23,7 @@ export class AdminForm1 extends BaseComponent {
             name: "notification_type",
             label: "Тип уведомления",
             placeholder: "Выберите тип уведомления",
-            options: ["friend_request", "b", "c"],
+            options: get_allowed_notification_types(),
         };
         const select_type_component = new SelectInput(select_type_input_props);
         select_type_component.render(root);
@@ -29,11 +31,20 @@ export class AdminForm1 extends BaseComponent {
         select_type_error.className = "admin_form_1_error";
         select_type_error.id = "admin_form_1_type_error";
         root.appendChild(select_type_error);
+        const users_options: SelectOption[] = [];
+        const users: ShortUserObject[] = get_allowed_user_ids();
+        for (const user of users) {
+            if (user.full_name !== "")
+                users_options.push({
+                    value: user.id,
+                    label: user.full_name,
+                });
+        }
         const select_user_input_props: SelectInputProps = {
             name: "user_id",
             label: "Пользователь",
             placeholder: "Выберите пользователя",
-            options: ["1", "2", "3"],
+            options: users_options,
         };
         const select_user_component = new SelectInput(select_user_input_props);
         select_user_component.render(root);

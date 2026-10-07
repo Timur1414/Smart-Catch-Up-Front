@@ -1,3 +1,5 @@
+import {ShortUserObject} from "./objects_interfaces.ts";
+
 export interface SimpleResponse {
     code: number;
     message: string;
@@ -87,4 +89,12 @@ export interface NotificationsResponse extends UuidResponse {
             action_target: string;
         }[];
     }[];
+}
+
+export interface AllowedUserIdsResponse extends UuidResponse {
+    users: ShortUserObject[];
+}
+
+export interface AllowedNotificationTypesResponse extends UuidResponse {
+    types: string[];
 }
