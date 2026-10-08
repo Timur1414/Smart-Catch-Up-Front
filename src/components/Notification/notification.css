@@ -4,6 +4,19 @@
     border-radius: 10px;
     padding: 10px;
     background-color: #DEDEDE;
+
+    animation: notificationFadeIn 0.35s ease-out forwards;
+}
+
+@keyframes notificationFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .notification {

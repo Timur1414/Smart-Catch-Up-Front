@@ -4,7 +4,7 @@
 }
 
 .home_notifications_show_all_btn {
-    background-color: #17D685;
+    background-color: #59AAF1;
     border: 2px solid #4D7198;
     border-radius: 10px;
     padding: 10px 0;
@@ -17,7 +17,7 @@
 }
 
 .home_notifications_show_all_btn:hover {
-    background-color: #2EDD93;
+    background-color: #71B7F3;
 }
 
 .home_notifications_show_all_btn:focus {
