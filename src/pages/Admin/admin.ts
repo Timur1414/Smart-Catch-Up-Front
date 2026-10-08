@@ -4,11 +4,19 @@ import "./admin.css";
 import Handlebars from "handlebars";
 import {AdminForm1} from "../../components/AdminForm1/admin_form_1.ts";
 import {AdminFormN} from "../../components/AdminFormN/admin_form_n.ts";
+import {check_login} from "../../api/auth.ts";
+import {router} from "../../main.ts";
 
 export class AdminPage extends BasePage {
     async render(root: HTMLElement): Promise<void> {
         const compiledTemplate = Handlebars.compile(template);
         root.innerHTML = compiledTemplate({}).trim();
+
+        const is_login: boolean = await check_login();
+        if (!is_login) {
+            router.navigate("/login");
+            return;
+        }
 
         const form_1 = new AdminForm1({});
         const form_n = new AdminFormN({});
