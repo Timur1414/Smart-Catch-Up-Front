@@ -31,6 +31,35 @@ export const get_profile = async (): Promise<{ success: boolean, code: number, d
     }
 };
 
+export const update_profile = async (email: string, first_name: string, last_name: string): Promise<{success: boolean, code: number, data: ProfileResponse | ServerErrorResponse | UnauthorizedResponse}> => {
+    const body: string = JSON.stringify({email, first_name, last_name});
+    try {
+        let response: Response = await client("/profile", {method: "POST", body: body});
+        if (response.status === 401) {
+            const is_refreshed = await refresh();
+            if (!is_refreshed.success) {
+                const data: UnauthorizedResponse = await response.json();
+                return {success: false, code: data.code, data: data};
+            }
+            response = await client("/profile", {method: "POST", body: body});
+        }
+        if (!response.ok) {
+            const data: ServerErrorResponse = await response.json();
+            return {success: false, code: data.code, data: data};
+        }
+        const data: ProfileResponse = await response.json();
+        return {success: true, code: data.code, data: data};
+    }
+    catch (error) {
+        const data: ServerErrorResponse = {
+            code: 0,
+            message: "Network error",
+            request_id: "",
+        };
+        return {success: false, code: 0, data: data};
+    }
+}
+
 export const get_allowed_user_ids = async (): Promise<ShortUserObject[]> => {
     try {
         let response: Response = await client("/users_ids", {method: "GET"});

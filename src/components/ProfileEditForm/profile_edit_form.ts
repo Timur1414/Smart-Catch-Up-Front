@@ -7,4 +7,13 @@ export class ProfileEditForm extends BaseComponent {
     constructor(props: ProfileEditProps) {
         super(template, props);
     }
+
+    _addEventListeners() {
+        const send_btn: HTMLInputElement | null | undefined = this.getElement()?.querySelector<HTMLInputElement>("#profile_edit_form_email_input");
+        if (!send_btn)
+            return;
+        send_btn.disabled = true;
+
+        send_btn.disabled = false;
+    }
 }
