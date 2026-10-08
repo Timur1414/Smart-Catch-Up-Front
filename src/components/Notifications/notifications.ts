@@ -7,6 +7,7 @@ import {ModalProps, NotificationsProps} from "../../types/props_interfaces.ts";
 import {get_all_notifications} from "../../api/notifications.ts";
 import {Modal} from "../Modal/modal.ts";
 import {NotificationsResponse} from "../../types/responses_interfaces.ts";
+import {formatRelativeTime} from "../../utils/date.ts";
 
 
 export class Notifications extends BaseComponent {
@@ -25,7 +26,7 @@ export class Notifications extends BaseComponent {
         for (let i: number = 0; i < this.notifications.length; i++) {
             const notification = new Notification({
                 actor: this.notifications[i].actor,
-                date: this.notifications[i].date,
+                date: formatRelativeTime(this.notifications[i].date),
                 payload: this.notifications[i].payload,
                 img: this.notifications[i].img,
             });
@@ -67,7 +68,7 @@ export class Notifications extends BaseComponent {
         for (let i: number = 0; i < all_notifications.length; i++) {
             const notification = new Notification({
                 actor: all_notifications[i].actor,
-                date: all_notifications[i].date,
+                date: formatRelativeTime(all_notifications[i].date),
                 payload: all_notifications[i].payload,
                 img: all_notifications[i].img,
             });
