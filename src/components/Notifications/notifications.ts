@@ -23,12 +23,17 @@ export class Notifications extends BaseComponent {
         const notification_root: HTMLElement | null = container.querySelector<HTMLElement>(".home_notifications_content");
         if (!notification_root)
             return;
+        if (this.notifications.length === 0) {
+            notification_root.innerHTML = "Уведомлений пока нет...";
+            return;
+        }
         for (let i: number = 0; i < this.notifications.length; i++) {
             const notification = new Notification({
                 actor: this.notifications[i].actor,
                 date: formatRelativeTime(this.notifications[i].date),
                 payload: this.notifications[i].payload,
                 img: this.notifications[i].img,
+                actions: this.notifications[i].actions,
             });
             notification.render(notification_root);
         }
@@ -65,12 +70,17 @@ export class Notifications extends BaseComponent {
         notifications_root.innerHTML = "";
         const data: NotificationsResponse = response.data as NotificationsResponse;
         const all_notifications: NotificationObject[] = data.notifications;
+        if (all_notifications.length === 0) {
+            notifications_root.innerHTML = "Уведомлений пока нет...";
+            return;
+        }
         for (let i: number = 0; i < all_notifications.length; i++) {
             const notification = new Notification({
                 actor: all_notifications[i].actor,
                 date: formatRelativeTime(all_notifications[i].date),
                 payload: all_notifications[i].payload,
                 img: all_notifications[i].img,
+                actions: all_notifications[i].actions,
             });
             notification.render(notifications_root);
         }

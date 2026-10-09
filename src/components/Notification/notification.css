@@ -4,7 +4,7 @@
     border-radius: 10px;
     padding: 10px;
     background-color: #DEDEDE;
-
+    color: #212121;
     animation: notificationFadeIn 0.35s ease-out forwards;
 }
 
@@ -63,4 +63,39 @@
     hyphens: auto;
     overflow-wrap: break-word;
     /*word-break: break-all;*/
+}
+
+.notification_actions {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.notification_content_action_btn  {
+    background-color: #8A8585;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 40px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.notification_content_action_btn:hover {
+    background-color: rgba(85, 85, 85, 0.8);
+}
+
+.notification_content_action_btn:focus {
+
+}
+
+.notification_content_action_text {
+    background-color: #afaaaa;
+    color: #FFFFFF;
+    border: 2px solid #212121;
+    border-radius: 20px;
+    padding: 10px 40px;
+    box-sizing: border-box;
+    font-size: 12px;
 }

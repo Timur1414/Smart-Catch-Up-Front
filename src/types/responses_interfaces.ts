@@ -1,4 +1,4 @@
-import {ShortUserObject} from "./objects_interfaces.ts";
+import {NotificationObject, ShortUserObject} from "./objects_interfaces.ts";
 
 export interface SimpleResponse {
     code: number;
@@ -78,17 +78,7 @@ export interface DigestResponse extends UuidResponse {
 }
 
 export interface NotificationsResponse extends UuidResponse {
-    notifications: {
-        id: number;
-        img: string;
-        actor: string;
-        date: string;
-        payload: string;
-        actions: {
-            action_type: string;
-            action_target: string;
-        }[];
-    }[];
+    notifications: NotificationObject[];
 }
 
 export interface AllowedUserIdsResponse extends UuidResponse {

@@ -7,7 +7,15 @@
                 <div class="notification_date">{{date}}</div>
             </div>
             <div class="notification_payload">{{payload}}</div>
-            <div class="notification_actions">[actions btns]</div>
+            <div class="notification_actions">
+                {{#each actions}}
+                    {{#if (equal action_type "click")}}
+                        <button class="notification_content_action_btn">{{action_target}}</button>
+                    {{else}}
+                        <p class="notification_content_action_text">{{action_target}}</p>
+                    {{/if}}
+                {{/each}}
+            </div>
         </div>
     </div>
 </div>

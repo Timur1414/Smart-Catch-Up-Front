@@ -1,13 +1,15 @@
+export interface NotificationActionObject {
+    action_type: string;
+    action_target: string;
+}
+
 export interface NotificationObject {
     id: number;
     img: string;
     actor: string;
     date: string;
     payload: string;
-    actions: {
-        action_type: string;
-        action_target: string;
-    }[];
+    actions: NotificationActionObject[];
 }
 
 export interface UserObject {

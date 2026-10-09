@@ -1,4 +1,4 @@
-import {NotificationObject} from "./objects_interfaces.ts";
+import {NotificationActionObject, NotificationObject} from "./objects_interfaces.ts";
 
 export interface NotificationsProps {
     notifications: NotificationObject[];
@@ -44,6 +44,7 @@ export interface NotificationProps {
     actor: string;
     date: string;
     payload: string;
+    actions: NotificationActionObject[];
 }
 
 export interface ProfileAvatarProps {

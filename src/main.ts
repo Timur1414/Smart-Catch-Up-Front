@@ -1,4 +1,5 @@
-import './style.css'
+import "./style.css";
+import "./utils/helpers.ts";
 import {Router} from "./router/router.ts";
 import {HomePage} from "./pages/Home/home.ts";
 import {MainMenu} from "./components/MainMenu/main_menu.ts";
