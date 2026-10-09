@@ -62,5 +62,5 @@
     margin: 5px 0;
     hyphens: auto;
     overflow-wrap: break-word;
-    word-break: break-all;
+    /*word-break: break-all;*/
 }
