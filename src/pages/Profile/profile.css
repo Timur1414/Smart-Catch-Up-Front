@@ -5,7 +5,7 @@
     width: 30%;
 }
 
-.profile_change_password {
+.profile_change_password, .profile_2fa_btn {
     width: 50%;
     padding: 10px;
     font-size: 16px;
@@ -17,11 +17,11 @@
                 border-color 0.3s ease-in-out;
 }
 
-.profile_change_password:hover {
+.profile_change_password:hover, .profile_2fa_btn:hover {
     background-color: #1A85FF;
 }
 
-.profile_change_password:focus {
+.profile_change_password:focus, .profile_2fa_btn:focus {
     border-color: #8AA9C9;
 }
 

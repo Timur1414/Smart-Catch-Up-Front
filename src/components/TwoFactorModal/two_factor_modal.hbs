@@ -1,0 +1,84 @@
+<div class="two_factor_modal_overlay" role="dialog" aria-modal="true">
+    <div class="two_factor_modal_window">
+        <button class="two_factor_modal_close_btn" type="button" aria-label="Закрыть">&times;</button>
+
+        {{#if (equal state "menu")}}
+            <h3 class="two_factor_modal_title">Двухфакторная защита</h3>
+            <p class="two_factor_modal_desc">
+                Защитите ваш аккаунт с помощью кодов из приложений-аутентификаторов (Google Authenticator, Яндекс Ключ и др.).
+            </p>
+            <div class="two_factor_modal_buttons">
+                <button class="two_factor_modal_btn primary" id="btn_to_setup">Подключить 2FA</button>
+                <button class="two_factor_modal_btn danger" id="btn_to_disable">Отключить 2FA</button>
+            </div>
+        {{/if}}
+
+        {{#if (equal state "loading")}}
+            <div class="two_factor_modal_loading">
+                <p>Загрузка...</p>
+            </div>
+        {{/if}}
+
+        {{#if (equal state "setup")}}
+            <h3 class="two_factor_modal_title">Подключение 2FA</h3>
+            <p class="two_factor_modal_desc">
+                Отсканируйте QR-код в приложении-аутентификаторе:
+            </p>
+            <div class="two_factor_modal_qr_wrapper">
+                <img class="two_factor_modal_qr" src="{{qr_url}}" alt="QR Code" />
+            </div>
+            <div class="two_factor_modal_secret_label">Или введите ключ вручную:</div>
+            <div class="two_factor_modal_secret">{{secret}}</div>
+            <p class="two_factor_modal_hint">Введите 6-значный код из приложения для подтверждения:</p>
+            <input class="two_factor_modal_input" type="text" maxlength="6" placeholder="000000" id="input_setup_code" autofocus />
+            {{#if error_message}}
+                <div class="two_factor_modal_error">{{error_message}}</div>
+            {{/if}}
+            <div class="two_factor_modal_buttons">
+                <button class="two_factor_modal_btn primary" id="btn_confirm_enable">Подтвердить</button>
+                <button class="two_factor_modal_btn secondary" id="btn_back_to_menu">Назад</button>
+            </div>
+        {{/if}}
+
+        {{#if (equal state "backup_codes")}}
+            <h3 class="two_factor_modal_title success">2FA успешно включена!</h3>
+            <p class="two_factor_modal_desc">
+                Сохраните эти одноразовые резервные коды. Каждый код можно использовать один раз для входа при утере телефона:
+            </p>
+            <div class="two_factor_modal_backup_grid">
+                {{#each backup_codes}}
+                    <div class="two_factor_modal_backup_code">{{this}}</div>
+                {{/each}}
+            </div>
+            <div class="two_factor_modal_buttons">
+                <button class="two_factor_modal_btn primary" id="btn_copy_backup_codes">Скопировать коды</button>
+                <button class="two_factor_modal_btn secondary" id="btn_finish_setup">Готово</button>
+            </div>
+        {{/if}}
+
+        {{#if (equal state "disable")}}
+            <h3 class="two_factor_modal_title">Отключение 2FA</h3>
+            <p class="two_factor_modal_desc">
+                Для отключения двухфакторной защиты введите текущий код из приложения или резервный код:
+            </p>
+            <input class="two_factor_modal_input" type="text" maxlength="8" placeholder="Код подтверждения" id="input_disable_code" autofocus />
+            {{#if error_message}}
+                <div class="two_factor_modal_error">{{error_message}}</div>
+            {{/if}}
+            <div class="two_factor_modal_buttons">
+                <button class="two_factor_modal_btn danger" id="btn_confirm_disable">Отключить</button>
+                <button class="two_factor_modal_btn secondary" id="btn_back_to_menu">Назад</button>
+            </div>
+        {{/if}}
+
+        {{#if (equal state "disable_success")}}
+            <h3 class="two_factor_modal_title success">2FA отключена</h3>
+            <p class="two_factor_modal_desc">
+                Двухфакторная защита вашего аккаунта успешно отключена.
+            </p>
+            <div class="two_factor_modal_buttons">
+                <button class="two_factor_modal_btn primary" id="btn_close_modal">Закрыть</button>
+            </div>
+        {{/if}}
+    </div>
+</div>

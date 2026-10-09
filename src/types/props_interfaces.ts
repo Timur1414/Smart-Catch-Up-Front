@@ -73,3 +73,8 @@ export interface SelectInputProps {
     error?: string;
     onChange?: (value: string, option: SelectOption | null) => void;
 }
+
+export interface TwoFactorModalProps {
+    onClose?: () => void;
+    onSuccess?: () => void;
+}
