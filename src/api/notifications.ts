@@ -43,6 +43,8 @@ export const get_allowed_notification_types = async (): Promise<string[]> => {
                 return [];
             response = await client("/notification_types", {method: "GET"});
         }
+        if (!response.ok)
+            return [];
         const data: AllowedNotificationTypesResponse = await response.json();
         return data.types;
     }

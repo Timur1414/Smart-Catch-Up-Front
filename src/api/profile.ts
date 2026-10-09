@@ -1,4 +1,10 @@
-import {AllowedUserIdsResponse, ProfileResponse, ServerErrorResponse, UnauthorizedResponse} from "../types/responses_interfaces.ts";
+import {
+    AllowedUserIdsResponse,
+    ProfileResponse,
+    ServerErrorResponse,
+    UnauthorizedResponse,
+    ValidationErrorResponse
+} from "../types/responses_interfaces.ts";
 import {client} from "./client.ts";
 import {refresh} from "./auth.ts";
 import {ShortUserObject} from "../types/objects_interfaces.ts";
@@ -31,7 +37,7 @@ export const get_profile = async (): Promise<{ success: boolean, code: number, d
     }
 };
 
-export const update_profile = async (email: string, first_name: string, last_name: string): Promise<{success: boolean, code: number, data: ProfileResponse | ServerErrorResponse | UnauthorizedResponse}> => {
+export const update_profile = async (email: string, first_name: string, last_name: string): Promise<{success: boolean, code: number, data: ProfileResponse | ValidationErrorResponse | ServerErrorResponse | UnauthorizedResponse}> => {
     const body: string = JSON.stringify({email, first_name, last_name});
     try {
         let response: Response = await client("/profile", {method: "POST", body: body});
@@ -44,7 +50,7 @@ export const update_profile = async (email: string, first_name: string, last_nam
             response = await client("/profile", {method: "POST", body: body});
         }
         if (!response.ok) {
-            const data: ServerErrorResponse = await response.json();
+            const data: ServerErrorResponse | ValidationErrorResponse = await response.json();
             return {success: false, code: data.code, data: data};
         }
         const data: ProfileResponse = await response.json();
@@ -69,6 +75,8 @@ export const get_allowed_user_ids = async (): Promise<ShortUserObject[]> => {
                 return [];
             response = await client("/users_ids", {method: "GET"});
         }
+        if (!response.ok)
+            return [];
         const data: AllowedUserIdsResponse = await response.json();
         return data.users;
     }
