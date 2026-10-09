@@ -88,7 +88,7 @@
     color: white;
 }
 
-.login_btn {
+.login_btn, .login2FA_btn {
     box-sizing: border-box;
     width: 100%;
     margin: 20px 0;
@@ -102,14 +102,14 @@
                 border-color 0.3s ease-in-out;
 }
 
-.login_btn:focus {
+.login_btn:focus, .login2FA_btn:focus {
     border-color: #76ade8;
 }
 
-.login_btn:hover {
+.login_btn:hover, .login2FA_btn:hover {
     background-color: #27eedd;
 }
 
-.login_btn:disabled {
+.login_btn:disabled, .login2FA_btn:disabled {
     background-color: rgb(24 205 190 / 0.4);
 }

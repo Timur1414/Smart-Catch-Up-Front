@@ -1,7 +1,8 @@
 import {client} from "./client.ts";
 import {
+    Enable2FAResponse,
     LoginSuccessResponse, LogoutSuccessResponse, RegisterErrorResponse, RegisterSuccessResponse,
-    ServerErrorResponse, SimpleResponse,
+    ServerErrorResponse, Setup2FAResponse, SimpleResponse,
     TooManyRequestsResponse,
     UnauthorizedResponse
 } from "../types/responses_interfaces.ts";
@@ -115,4 +116,41 @@ export const check_login = async (): Promise<boolean> => {
     catch (error) {
         return false;
     }
+};
+
+export const login2FA = async (temp_token: string, code: string) => {
+    try {
+        const response: Response = await client("/auth/login/2fa", {
+            method: "POST",
+            body: JSON.stringify({ temp_token, code }),
+        });
+        const data: SimpleResponse | UnauthorizedResponse | TooManyRequestsResponse | ServerErrorResponse = await response.json();
+        return { success: data.code === 200, code: data.code, data };
+    } catch {
+        return { success: false, code: 0, data: { message: "Network error" } };
+    }
+};
+
+export const setup2FA = async () => {
+    const response: Response = await client("/profile/2fa/setup", { method: "POST" });
+    const data: Setup2FAResponse = await response.json();
+    return { success: data.code === 200, code: data.code, data };
+};
+
+export const enable2FA = async (code: string) => {
+    const response: Response = await client("/profile/2fa/enable", {
+        method: "POST",
+        body: JSON.stringify({ code }),
+    });
+    const data: Enable2FAResponse = await response.json();
+    return { success: data.code === 200, code: data.code, data };
+};
+
+export const disable2FA = async (code: string) => {
+    const response: Response = await client("/profile/2fa/disable", {
+        method: "POST",
+        body: JSON.stringify({ code }),
+    });
+    const data: ServerErrorResponse | UnauthorizedResponse | SimpleResponse = await response.json();
+    return { success: data.code === 200, code: data.code, data };
 };

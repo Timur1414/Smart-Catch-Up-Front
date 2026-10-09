@@ -35,6 +35,8 @@ export interface ServerErrorResponse extends UuidResponse {
 
 export interface LoginSuccessResponse extends UuidResponse {
     code: 200;
+    mfa_required?: boolean;
+    temp_token?: string;
 }
 
 export interface LoginErrorResponse extends ValidationErrorResponse {}
@@ -87,4 +89,21 @@ export interface AllowedUserIdsResponse extends UuidResponse {
 
 export interface AllowedNotificationTypesResponse extends UuidResponse {
     types: string[];
+}
+
+export interface LoginMfaResponse extends SimpleResponse {
+    request_id?: string;
+    mfa_required: boolean;
+    temp_token: string;
+}
+
+export interface Setup2FAResponse extends SimpleResponse {
+    request_id?: string;
+    secret: string;
+    otpauth_url: string;
+}
+
+export interface Enable2FAResponse extends SimpleResponse {
+    request_id?: string;
+    backup_codes: string[];
 }

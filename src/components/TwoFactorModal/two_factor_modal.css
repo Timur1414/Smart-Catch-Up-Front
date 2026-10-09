@@ -1,0 +1,200 @@
+.two_factor_modal_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.two_factor_modal_window {
+    background: #1B232D;
+    color: #FFFFFF;
+    border: 1px solid #4D7198;
+    border-radius: 14px;
+    padding: 26px;
+    width: 440px;
+    max-width: 90vw;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: modal_appear 0.2s ease-out;
+}
+
+@keyframes modal_appear {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.two_factor_modal_close_btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    color: #8AA9C9;
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.two_factor_modal_close_btn:hover {
+    color: #FFFFFF;
+}
+
+.two_factor_modal_title {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.two_factor_modal_title.success {
+    color: #4BB34B;
+}
+
+.two_factor_modal_desc {
+    font-size: 14px;
+    color: #8AA9C9;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+}
+
+.two_factor_modal_hint {
+    font-size: 13px;
+    color: #8AA9C9;
+    margin: 8px 0;
+}
+
+.two_factor_modal_qr_wrapper {
+    background: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+}
+
+.two_factor_modal_qr {
+    width: 170px;
+    height: 170px;
+    display: block;
+}
+
+.two_factor_modal_secret_label {
+    font-size: 12px;
+    color: #8AA9C9;
+    margin-top: 6px;
+}
+
+.two_factor_modal_secret {
+    font-family: monospace;
+    font-size: 14px;
+    background: #253140;
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin: 6px 0 12px 0;
+    user-select: all;
+    border: 1px dashed #4D7198;
+}
+
+.two_factor_modal_input {
+    width: 70%;
+    padding: 10px;
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-align: center;
+    border: 1px solid #4D7198;
+    border-radius: 8px;
+    background: #253140;
+    color: #FFFFFF;
+    outline: none;
+    margin-bottom: 8px;
+    transition: border-color 0.2s;
+}
+
+.two_factor_modal_input:focus {
+    border-color: #0077FF;
+}
+
+.two_factor_modal_error {
+    color: #FF5A5A;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.two_factor_modal_buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 85%;
+    margin-top: 10px;
+}
+
+.two_factor_modal_btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.two_factor_modal_btn.primary {
+    background-color: #0077FF;
+}
+
+.two_factor_modal_btn.primary:hover {
+    background-color: #1A85FF;
+}
+
+.two_factor_modal_btn.danger {
+    background-color: #E64646;
+}
+
+.two_factor_modal_btn.danger:hover {
+    background-color: #E95C5C;
+}
+
+.two_factor_modal_btn.secondary {
+    background-color: #253140;
+}
+
+.two_factor_modal_btn.secondary:hover {
+    background-color: #314256;
+}
+
+.two_factor_modal_btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.two_factor_modal_backup_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 12px 0 16px 0;
+    width: 100%;
+}
+
+.two_factor_modal_backup_code {
+    background: #253140;
+    padding: 8px;
+    font-family: monospace;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px dashed #4D7198;
+    user-select: all;
+}
+
+.two_factor_modal_loading {
+    padding: 40px;
+    color: #8AA9C9;
+}

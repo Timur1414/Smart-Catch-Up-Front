@@ -1,15 +1,16 @@
-import {BasePage} from "../base_page.ts";
+import { BasePage } from "../base_page.ts";
 import template from "./profile.hbs?raw";
 import "./profile.css";
 import Handlebars from "handlebars";
-import {ProfileAvatar} from "../../components/ProfileAvatar/profile_avatar.ts";
-import {ProfileEditForm} from "../../components/ProfileEditForm/profile_edit_form.ts";
-import {logout} from "../../api/auth.ts";
-import {router} from "../../main.ts";
-import {Modal} from "../../components/Modal/modal.ts";
-import {get_profile} from "../../api/profile.ts";
-import {ProfileResponse} from "../../types/responses_interfaces.ts";
-import {ModalProps} from "../../types/props_interfaces.ts";
+import { ProfileAvatar } from "../../components/ProfileAvatar/profile_avatar.ts";
+import { ProfileEditForm } from "../../components/ProfileEditForm/profile_edit_form.ts";
+import { logout } from "../../api/auth.ts";
+import { router } from "../../main.ts";
+import { Modal } from "../../components/Modal/modal.ts";
+import { get_profile } from "../../api/profile.ts";
+import { ProfileResponse } from "../../types/responses_interfaces.ts";
+import { ModalProps } from "../../types/props_interfaces.ts";
+import {TwoFactorModal} from "../../components/TwoFactorModal/two_factor_modal.ts";
 
 export class ProfilePage extends BasePage {
     async render(root: HTMLElement): Promise<void> {
@@ -57,6 +58,14 @@ export class ProfilePage extends BasePage {
             e.preventDefault();
             await this.logout(logout_btn);
         });
+        const twoFaBtn: HTMLButtonElement | null = root.querySelector<HTMLButtonElement>(".profile_2fa_btn");
+        if (twoFaBtn) {
+            twoFaBtn.addEventListener("click", (e: Event) => {
+                e.preventDefault();
+                const modal = new TwoFactorModal();
+                modal.open();
+            });
+        }
     }
 
     async logout(logout_btn: HTMLButtonElement) {
