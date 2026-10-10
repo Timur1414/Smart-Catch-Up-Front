@@ -1,4 +1,5 @@
 import {NotificationActionObject, NotificationObject} from "./objects_interfaces.ts";
+import {DigestResponse} from "./responses_interfaces.ts";
 
 export interface NotificationsProps {
     notifications: NotificationObject[];
@@ -78,3 +79,5 @@ export interface TwoFactorModalProps {
     onClose?: () => void;
     onSuccess?: () => void;
 }
+
+export interface DigestProps extends DigestResponse {}

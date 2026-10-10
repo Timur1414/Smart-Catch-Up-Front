@@ -7,9 +7,10 @@ import {Notifications} from "../../components/Notifications/notifications.ts";
 import {get_notifications} from "../../api/notifications.ts";
 import {router} from "../../main.ts";
 import {Modal} from "../../components/Modal/modal.ts";
-import {NotificationsResponse} from "../../types/responses_interfaces.ts";
+import {DigestResponse, NotificationsResponse} from "../../types/responses_interfaces.ts";
 import {NotificationObject} from "../../types/objects_interfaces.ts";
 import {ModalProps} from "../../types/props_interfaces.ts";
+import {get_digest} from "../../api/digest.ts";
 
 export class HomePage extends BasePage {
     async render(root: HTMLElement): Promise<void> {
@@ -32,8 +33,24 @@ export class HomePage extends BasePage {
             return;
         }
         const notifications_data: NotificationsResponse = notifications_response.data as NotificationsResponse;
+        const digest_response = await get_digest();
+        if (digest_response.code === 401) {
+            router.navigate("/login");
+            return;
+        }
+        if (digest_response.code === 500 || digest_response.code === 0) {
+            const modal_props: ModalProps = {
+                title: "Ошибка",
+                message: digest_response.data.message,
+                autoRender: false,
+            };
+            const modal = new Modal(modal_props);
+            modal.open();
+            return;
+        }
+        const digest_data: DigestResponse = digest_response.data as DigestResponse;
 
-        const digest: DigestComponent = new DigestComponent({});
+        const digest: DigestComponent = new DigestComponent(digest_data);
         const notifications: Notifications = new Notifications({
             notifications: notifications_data.notifications as NotificationObject[],
         });
