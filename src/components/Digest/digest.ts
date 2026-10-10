@@ -13,7 +13,6 @@ export class DigestComponent extends BaseComponent {
 
     constructor(props: DigestProps) {
         super(template, props);
-        console.log("props", props)
         this.important_categories = props.important;
         this.categories = props.categories;
         this.created_at = props.created_at;
@@ -31,7 +30,7 @@ export class DigestComponent extends BaseComponent {
             return;
         }
         digest_category_root.innerText = "";
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < this.categories.length; i++) {
             let component = new DigestCategory({
                 header: this.categories[i].category_type,
                 content: this.categories[i].text,
