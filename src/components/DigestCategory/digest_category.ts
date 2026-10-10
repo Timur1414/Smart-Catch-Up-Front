@@ -6,6 +6,7 @@ import {DigestCategoryProps} from "../../types/props_interfaces.ts";
 export class DigestCategory extends BaseComponent {
     constructor(props: DigestCategoryProps) {
         super(template, props);
+        console.log(props.content)
     }
 
     _addEventListeners() {

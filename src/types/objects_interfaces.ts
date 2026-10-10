@@ -25,3 +25,13 @@ export interface ShortUserObject {
     id: number;
     full_name: string;
 }
+
+export interface ImportantCategoryObject {
+    notification: string;
+    timestamp: string;
+}
+
+export interface CategoryObject {
+    category_type: string;
+    text: string;
+}

@@ -50,3 +50,7 @@
 .digest-category_header_arrow_open {
     transform: rotate(-180deg);
 }
+
+.digest-category_content_text {
+    white-space: pre-line;
+}

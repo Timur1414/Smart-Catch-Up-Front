@@ -1,4 +1,4 @@
-import {NotificationObject, ShortUserObject} from "./objects_interfaces.ts";
+import {CategoryObject, ImportantCategoryObject, NotificationObject, ShortUserObject} from "./objects_interfaces.ts";
 
 export interface SimpleResponse {
     code: number;
@@ -69,14 +69,8 @@ export interface UserRoleResponse extends UuidResponse {
 
 export interface DigestResponse extends UuidResponse {
     created_at: string;
-    important: {
-        notification: string;
-        timestamp: string;
-    }[];
-    categories: {
-        category_type: string;
-        text: string;
-    }[];
+    important: ImportantCategoryObject[];
+    categories: CategoryObject[];
 }
 
 export interface NotificationsResponse extends UuidResponse {
