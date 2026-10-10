@@ -3,7 +3,7 @@ import template from "./two_factor_modal.hbs?raw";
 import "./two_factor_modal.css";
 import { setup2FA, enable2FA, disable2FA } from "../../api/auth.ts";
 import {TwoFactorModalProps} from "../../types/props_interfaces.ts";
-
+import {toDataURL} from "qrcode";
 
 
 export class TwoFactorModal extends BaseComponent {
@@ -109,7 +109,10 @@ export class TwoFactorModal extends BaseComponent {
             return;
         }
         const data = res.data as any;
-        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(data.otpauth_url)}`;
+        const qrUrl: string = await toDataURL(data.otpauth_url, {
+            width: 180,
+            margin: 1,
+        });
 
         this.update({
             state: "setup",
