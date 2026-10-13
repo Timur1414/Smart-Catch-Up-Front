@@ -40,6 +40,8 @@ export class TwoFactorModal extends BaseComponent {
             this._keydownHandler = (event: KeyboardEvent) => {
                 if (event.key === "Escape") {
                     this.close();
+                } else if (event.key === "Enter") {
+                    this._handleEnter(event);
                 }
             };
             window.addEventListener("keydown", this._keydownHandler);
@@ -60,6 +62,17 @@ export class TwoFactorModal extends BaseComponent {
         if (backBtn) {
             this._on(backBtn, "click", () => {
                 this.update({ state: "menu", error_message: "" });
+            });
+        }
+        const eyeBtn: HTMLImageElement | null = element.querySelector<HTMLImageElement>("#two_factor_modal_password_eye");
+        if (eyeBtn) {
+            this._on(eyeBtn, "click", (e: Event) => {
+                e.preventDefault();
+                const passwordInput = element.querySelector<HTMLInputElement>("#input_setup_password");
+                if (!passwordInput) return;
+                const isPassword = passwordInput.type === "password";
+                passwordInput.type = isPassword ? "text" : "password";
+                eyeBtn.src = isPassword ? "/icons/closed_eye.png" : "/icons/eye.png";
             });
         }
         const confirmEnableBtn: HTMLButtonElement | null = element.querySelector<HTMLButtonElement>("#btn_confirm_enable");
@@ -123,8 +136,15 @@ export class TwoFactorModal extends BaseComponent {
     }
 
     private async _confirmEnable(btn: HTMLButtonElement): Promise<void> {
-        const input: HTMLInputElement | null | undefined = this.getElement()?.querySelector<HTMLInputElement>("#input_setup_code");
-        const code: string = input?.value.trim() ?? "";
+        const passwordInput: HTMLInputElement | null | undefined = this.getElement()?.querySelector<HTMLInputElement>("#input_setup_password");
+        const codeInput: HTMLInputElement | null | undefined = this.getElement()?.querySelector<HTMLInputElement>("#input_setup_code");
+        const password: string = passwordInput?.value ?? "";
+        const code: string = codeInput?.value.trim() ?? "";
+
+        if (!password) {
+            this.update({ error_message: "Введите текущий пароль" });
+            return;
+        }
 
         if (code.length !== 6) {
             this.update({ error_message: "Введите 6-значный проверочный код" });
@@ -132,7 +152,7 @@ export class TwoFactorModal extends BaseComponent {
         }
 
         btn.disabled = true;
-        const res = await enable2FA(code);
+        const res = await enable2FA(code, password);
         btn.disabled = false;
 
         if (!res.success) {
@@ -166,6 +186,34 @@ export class TwoFactorModal extends BaseComponent {
             state: "disable_success",
             error_message: "",
         });
+    }
+
+    private _handleEnter(event: KeyboardEvent): void {
+        const element: HTMLElement | null = this.getElement();
+        if (!element) return;
+
+        const activeEl = document.activeElement;
+        if (
+            activeEl instanceof HTMLButtonElement &&
+            activeEl.id !== "btn_confirm_enable" &&
+            activeEl.id !== "btn_confirm_disable"
+        ) {
+            return;
+        }
+
+        const confirmEnableBtn: HTMLButtonElement | null = element.querySelector<HTMLButtonElement>("#btn_confirm_enable");
+        if (confirmEnableBtn && !confirmEnableBtn.disabled) {
+            event.preventDefault();
+            confirmEnableBtn.click();
+            return;
+        }
+
+        const confirmDisableBtn: HTMLButtonElement | null = element.querySelector<HTMLButtonElement>("#btn_confirm_disable");
+        if (confirmDisableBtn && !confirmDisableBtn.disabled) {
+            event.preventDefault();
+            confirmDisableBtn.click();
+            return;
+        }
     }
 
     public open(container: HTMLElement = document.body): void {

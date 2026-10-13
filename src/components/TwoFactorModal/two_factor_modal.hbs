@@ -29,8 +29,13 @@
             </div>
             <div class="two_factor_modal_secret_label">Или введите ключ вручную:</div>
             <div class="two_factor_modal_secret">{{secret}}</div>
+            <p class="two_factor_modal_hint">Введите текущий пароль:</p>
+            <div class="two_factor_modal_password_wrapper">
+                <input class="two_factor_modal_input password" type="password" placeholder="Текущий пароль" id="input_setup_password" autofocus />
+                <img class="two_factor_modal_eye" id="two_factor_modal_password_eye" src="/icons/eye.png" alt="eye" />
+            </div>
             <p class="two_factor_modal_hint">Введите 6-значный код из приложения для подтверждения:</p>
-            <input class="two_factor_modal_input" type="text" maxlength="6" placeholder="000000" id="input_setup_code" autofocus />
+            <input class="two_factor_modal_input" type="text" maxlength="6" placeholder="000000" id="input_setup_code" />
             {{#if error_message}}
                 <div class="two_factor_modal_error">{{error_message}}</div>
             {{/if}}

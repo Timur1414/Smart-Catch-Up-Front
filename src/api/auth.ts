@@ -137,10 +137,10 @@ export const setup2FA = async () => {
     return { success: data.code === 200, code: data.code, data };
 };
 
-export const enable2FA = async (code: string) => {
+export const enable2FA = async (code: string, password: string) => {
     const response: Response = await client("/profile/2fa/enable", {
         method: "POST",
-        body: JSON.stringify({ code }),
+        body: JSON.stringify({ code, password }),
     });
     const data: Enable2FAResponse = await response.json();
     return { success: data.code === 200, code: data.code, data };
