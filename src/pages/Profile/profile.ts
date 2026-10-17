@@ -13,6 +13,8 @@ import { ModalProps } from "../../types/props_interfaces.ts";
 import {TwoFactorModal} from "../../components/TwoFactorModal/two_factor_modal.ts";
 
 export class ProfilePage extends BasePage {
+    private readonly avatar_prefix: string = "static/";
+
     async render(root: HTMLElement): Promise<void> {
         const compiledTemplate = Handlebars.compile(template);
         root.innerHTML = compiledTemplate({}).trim();
@@ -41,7 +43,7 @@ export class ProfilePage extends BasePage {
         if (!content_root)
             return;
         const avatar_component = new ProfileAvatar({
-            url: profile_data.avatar_url,
+            url: this.avatar_prefix + profile_data.avatar_url,
         });
         avatar_component.render(content_root);
         const form_component = new ProfileEditForm({

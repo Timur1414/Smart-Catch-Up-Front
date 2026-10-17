@@ -1,0 +1,92 @@
+.select_avatar_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.select_avatar_window {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: modal_appear 0.2s ease-out;
+    background: #1B232D;
+    color: #FFFFFF;
+    border: 1px solid #4D7198;
+    border-radius: 14px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+    padding: 26px;
+    max-width: 90vw;
+}
+
+.select_avatar_window_close_btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    color: #8AA9C9;
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.select_avatar_window_close_btn:hover {
+    color: #FFFFFF;
+}
+
+.select_avatar_header {
+    width: 100%;
+}
+
+.select_avatar_img {
+    min-width: 150px !important;
+    min-height: 150px !important;
+    border-radius: 50%;
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 2px solid #2E2E2E;
+    margin: 10px 0;
+}
+
+.select_avatar_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.select_avatar_input {
+
+}
+
+.select_avatar_error {
+    color: #E64646;
+}
+
+.select_avatar_save_btn {
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px solid #4D7198;
+    border-radius: 10px;
+    background-color: #0077FF;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
+}
+
+.select_avatar_save_btn:hover {
+    background-color: #1A85FF;
+}
+
+.select_avatar_save_btn:focus {
+    border-color: #8AA9C9;
+}

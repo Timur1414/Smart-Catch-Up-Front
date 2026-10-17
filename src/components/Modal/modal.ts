@@ -4,7 +4,6 @@ import "./modal.css";
 import {ModalProps} from "../../types/props_interfaces.ts";
 
 
-
 export class Modal extends BaseComponent {
     private _onCloseCallback?: () => void;
     private _keydownHandler: ((event: KeyboardEvent) => void) | null = null;

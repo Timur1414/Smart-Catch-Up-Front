@@ -81,3 +81,7 @@ export interface TwoFactorModalProps {
 }
 
 export interface DigestProps extends DigestResponse {}
+
+export interface SelectAvatarProps {
+    url: string;
+}
