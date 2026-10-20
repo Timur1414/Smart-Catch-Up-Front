@@ -25,13 +25,24 @@ export class DigestComponent extends BaseComponent {
         let digest_category_root: HTMLElement | null = elem.querySelector<HTMLElement>(".home_digest_content");
         if (!digest_category_root)
             return;
-        if (this.categories.length === 0) {
+        if (this.categories.length === 0 && this.important_categories.length === 0) {
             digest_category_root.innerText = "Дайджест ещё не сформировался...";
             return;
         }
         digest_category_root.innerText = "";
+        if (this.important_categories.length > 0) {
+            const content: string[] = [];
+            for (let i = 0; i < this.important_categories.length; i++) {
+                content.push(this.important_categories[i].notification);
+            }
+            let component: DigestCategory = new DigestCategory({
+                header: "Важное",
+                content: content.join("\n"),
+            });
+            component.render(digest_category_root);
+        }
         for (let i = 0; i < this.categories.length; i++) {
-            let component = new DigestCategory({
+            let component: DigestCategory = new DigestCategory({
                 header: this.categories[i].category_type,
                 content: this.categories[i].text,
             });
