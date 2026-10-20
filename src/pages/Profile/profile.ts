@@ -11,6 +11,8 @@ import { get_profile } from "../../api/profile.ts";
 import { ProfileResponse } from "../../types/responses_interfaces.ts";
 import { ModalProps } from "../../types/props_interfaces.ts";
 import {TwoFactorModal} from "../../components/TwoFactorModal/two_factor_modal.ts";
+import {clear_cur_user, set_cur_user} from "../../store/store.ts";
+import {UserObject} from "../../types/objects_interfaces.ts";
 
 export class ProfilePage extends BasePage {
     private readonly avatar_prefix: string = "static/";
@@ -38,6 +40,7 @@ export class ProfilePage extends BasePage {
             return;
         }
         const profile_data: ProfileResponse = response.data as ProfileResponse;
+        set_cur_user(profile_data as UserObject);
 
         const content_root: HTMLElement | null = root.querySelector<HTMLElement>(".profile_content");
         if (!content_root)
@@ -84,6 +87,7 @@ export class ProfilePage extends BasePage {
             modal.open();
             return;
         }
+        clear_cur_user();
         router.navigate("/");
     }
 }

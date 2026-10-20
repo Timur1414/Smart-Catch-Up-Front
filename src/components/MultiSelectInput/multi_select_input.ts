@@ -18,7 +18,7 @@ export class MultiSelectInput extends BaseComponent {
             (props.selectedValues || []).map((val: string | number): string => String(val))
         );
 
-        const normalizedOptions: MultiSelectOption[] = (props.options || []).map((opt: string | MultiSelectOption) => {
+        const normalizedOptions: MultiSelectOption[] = (props.options || []).map((opt: string | number | MultiSelectOption) => {
             if (typeof opt === "string" || typeof opt === "number") {
                 const str: string = String(opt);
                 return {
@@ -223,7 +223,7 @@ export class MultiSelectInput extends BaseComponent {
             this._selectedValues = new Set(selectedValues.map((v: string | number): string => String(v)));
         }
 
-        this._optionsList = options.map((opt: string | MultiSelectOption) => {
+        this._optionsList = options.map((opt: string | number | MultiSelectOption) => {
             if (typeof opt === "string" || typeof opt === "number") {
                 const str: string = String(opt);
                 return {

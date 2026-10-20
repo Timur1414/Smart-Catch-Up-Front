@@ -37,8 +37,8 @@ export const get_profile = async (): Promise<{ success: boolean, code: number, d
     }
 };
 
-export const update_profile = async (email: string, first_name: string, last_name: string): Promise<{success: boolean, code: number, data: ProfileResponse | ValidationErrorResponse | ServerErrorResponse | UnauthorizedResponse}> => {
-    const body: string = JSON.stringify({email, first_name, last_name});
+export const update_profile = async (email: string, first_name: string, last_name: string, important_types: string[]): Promise<{success: boolean, code: number, data: ProfileResponse | ValidationErrorResponse | ServerErrorResponse | UnauthorizedResponse}> => {
+    const body: string = JSON.stringify({email, first_name, last_name, important_types});
     try {
         let response: Response = await client("/profile", {method: "POST", body: body});
         if (response.status === 401) {

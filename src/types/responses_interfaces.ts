@@ -61,6 +61,8 @@ export interface ProfileResponse extends UuidResponse {
     first_name: string;
     last_name: string;
     is_staff: boolean;
+    enabled_2fa: boolean;
+    important: string[];
 }
 
 export interface UserRoleResponse extends UuidResponse {

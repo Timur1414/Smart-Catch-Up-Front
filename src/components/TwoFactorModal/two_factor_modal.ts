@@ -4,6 +4,8 @@ import "./two_factor_modal.css";
 import { setup2FA, enable2FA, disable2FA } from "../../api/auth.ts";
 import {TwoFactorModalProps} from "../../types/props_interfaces.ts";
 import {toDataURL} from "qrcode";
+import {UserObject} from "../../types/objects_interfaces.ts";
+import {get_cur_user} from "../../store/store.ts";
 
 
 export class TwoFactorModal extends BaseComponent {
@@ -12,9 +14,13 @@ export class TwoFactorModal extends BaseComponent {
     private _keydownHandler: ((event: KeyboardEvent) => void) | null = null;
 
     constructor(props: TwoFactorModalProps = {}) {
+        const cur_user: UserObject | null = get_cur_user();
+        if (!cur_user)
+            return;
         super(template, {
             state: "menu",
             error_message: "",
+            enabled_2fa: cur_user.enabled_2fa,
         });
 
         this._onCloseCallback = props.onClose;

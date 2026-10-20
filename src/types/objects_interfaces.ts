@@ -19,6 +19,8 @@ export interface UserObject {
     first_name: string;
     last_name: string;
     is_staff: boolean;
+    enabled_2fa: boolean;
+    important: string[];
 }
 
 export interface ShortUserObject {

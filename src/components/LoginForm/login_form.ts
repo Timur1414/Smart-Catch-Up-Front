@@ -5,7 +5,8 @@ import {login, login2FA} from "../../api/auth.ts";
 import {router} from "../../main.ts";
 import {ModalProps} from "../../types/props_interfaces.ts";
 import {Modal} from "../Modal/modal.ts";
-import {LoginSuccessResponse} from "../../types/responses_interfaces.ts";
+import {LoginMfaResponse, LoginSuccessResponse} from "../../types/responses_interfaces.ts";
+
 
 export class LoginForm extends BaseComponent {
     private temp_token: string = "";
@@ -83,8 +84,9 @@ export class LoginForm extends BaseComponent {
             password_error_elem.innerText = response.data.message;
             return;
         }
-        const data = response.data as LoginSuccessResponse;
+        let data: LoginSuccessResponse | LoginMfaResponse = response.data as LoginSuccessResponse;
         if (data.mfa_required) {
+            data = data as LoginMfaResponse;
             this.temp_token = data.temp_token || "";
             this.show2FAStep(this.temp_token);
             return;

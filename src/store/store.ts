@@ -1,4 +1,4 @@
-import {ShortUserObject} from "../types/objects_interfaces.ts";
+import {ShortUserObject, UserObject} from "../types/objects_interfaces.ts";
 
 let allowed_user_ids: ShortUserObject[] = [];
 
@@ -20,4 +20,18 @@ export function set_allowed_notification_types(notification_types: string[]): vo
 
 export function get_allowed_notification_types(): string[] {
     return allowed_notification_types;
+}
+
+let cur_user: UserObject | null;
+
+export function set_cur_user(user: UserObject): void {
+    cur_user = user;
+}
+
+export function get_cur_user(): UserObject | null {
+    return cur_user;
+}
+
+export function clear_cur_user(): void {
+    cur_user = null;
 }

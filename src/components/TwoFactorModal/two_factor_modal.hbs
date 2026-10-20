@@ -8,8 +8,11 @@
                 Защитите ваш аккаунт с помощью кодов из приложений-аутентификаторов (Google Authenticator, Яндекс Ключ и др.).
             </p>
             <div class="two_factor_modal_buttons">
-                <button class="two_factor_modal_btn primary" id="btn_to_setup">Подключить 2FA</button>
-                <button class="two_factor_modal_btn danger" id="btn_to_disable">Отключить 2FA</button>
+                {{# if enabled_2fa }}
+                    <button class="two_factor_modal_btn danger" id="btn_to_disable">Отключить 2FA</button>
+                {{else}}
+                    <button class="two_factor_modal_btn primary" id="btn_to_setup">Подключить 2FA</button>
+                {{/if}}
             </div>
         {{/if}}
 
