@@ -33,3 +33,28 @@ export function formatRelativeTime(date_input: string | number | Date): string {
     const diff_in_years: number = Math.floor(diff_in_days / 365);
     return rtf.format(-diff_in_years, "year");
 }
+
+
+export function formatDigestCreationTime(date_input: Date | string): string {
+    if (!date_input)
+        return "";
+    const date: Date = typeof date_input === "string" ? new Date(date_input) : date_input;
+    const map = new Map<number, string>([
+        [0, "Января"],
+        [1, "Февраля"],
+        [2, "Марта"],
+        [3, "Апреля"],
+        [4, "Майя"],
+        [5, "Июня"],
+        [6, "Июля"],
+        [7, "Августа"],
+        [8, "Сентября"],
+        [9, "Октября"],
+        [10, "Ноября"],
+        [11, "Декабря"],
+    ]);
+    const month: string | undefined = map.get(date.getMonth());
+    if (month === undefined)
+        return "";
+    return `${date.getDate() + 1} ${month} : ${date.getHours()} часов ${date.getMinutes()} минут`;
+}

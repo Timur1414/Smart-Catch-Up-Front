@@ -4,18 +4,20 @@ import "./digest.css";
 import {DigestCategory} from "../DigestCategory/digest_category.ts";
 import {DigestProps} from "../../types/props_interfaces.ts";
 import {CategoryObject, ImportantCategoryObject} from "../../types/objects_interfaces.ts";
+import {formatDigestCreationTime} from "../../utils/date.ts";
 
 
 export class DigestComponent extends BaseComponent {
     private important_categories: ImportantCategoryObject[] = [];
     private categories: CategoryObject[] = [];
-    private created_at: string;
 
     constructor(props: DigestProps) {
+        if (!props.created_at)
+            props.created_at = Date.now().toString();
+        props.created_at = formatDigestCreationTime(props.created_at);
         super(template, props);
         this.important_categories = props.important;
         this.categories = props.categories;
-        this.created_at = props.created_at;
     }
 
     _afterRender() {
