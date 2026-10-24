@@ -4,14 +4,14 @@ import {refresh} from "./auth.ts";
 
 export const get_digest = async (): Promise<{success: boolean, code: number, data: ServerErrorResponse | UnauthorizedResponse | DigestResponse}> => {
     try {
-        let response: Response = await client("/digest");
+        let response: Response = await client("/api/digest");
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success) {
                 const data: UnauthorizedResponse = await response.json();
                 return {success: false, code: data.code, data: data};
             }
-            response = await client("/digest");
+            response = await client("/api/digest");
         }
         if (!response.ok) {
             const data: ServerErrorResponse = await response.json();

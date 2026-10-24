@@ -3,11 +3,11 @@ import {client} from "./client.ts";
 import {refresh} from "./auth.ts";
 
 export const get_notifications = async () => {
-    return await get_notifications_client("/notifications");
+    return await get_notifications_client("/api/notifications");
 };
 
 export const get_all_notifications = async () => {
-    return await get_notifications_client("/notifications/all");
+    return await get_notifications_client("/api/notifications/all");
 };
 
 const get_notifications_client = async (url: string): Promise<{success: boolean, code: number, data: NotificationsResponse | ServerErrorResponse | UnauthorizedResponse}> => {
@@ -36,12 +36,12 @@ const get_notifications_client = async (url: string): Promise<{success: boolean,
 
 export const get_allowed_notification_types = async (): Promise<string[]> => {
     try {
-        let response: Response = await client("/notification_types", {method: "GET"});
+        let response: Response = await client("/api/notification_types", {method: "GET"});
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success)
                 return [];
-            response = await client("/notification_types", {method: "GET"});
+            response = await client("/api/notification_types", {method: "GET"});
         }
         if (!response.ok)
             return [];

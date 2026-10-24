@@ -11,14 +11,14 @@ import {ShortUserObject} from "../types/objects_interfaces.ts";
 
 export const get_profile = async (): Promise<{ success: boolean, code: number, data: ProfileResponse | UnauthorizedResponse | ServerErrorResponse }> => {
     try {
-        let response: Response = await client("/profile", {method: "GET"});
+        let response: Response = await client("/api/profile", {method: "GET"});
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success) {
                 const data: UnauthorizedResponse = await response.json();
                 return {success: false, code: data.code, data: data};
             }
-            response = await client("/profile", {method: "GET"});
+            response = await client("/api/profile", {method: "GET"});
         }
         if (!response.ok) {
             const data: ServerErrorResponse = await response.json();
@@ -40,14 +40,14 @@ export const get_profile = async (): Promise<{ success: boolean, code: number, d
 export const update_profile = async (email: string, first_name: string, last_name: string, important_types: string[]): Promise<{success: boolean, code: number, data: ProfileResponse | ValidationErrorResponse | ServerErrorResponse | UnauthorizedResponse}> => {
     const body: string = JSON.stringify({email, first_name, last_name, important_types});
     try {
-        let response: Response = await client("/profile", {method: "POST", body: body});
+        let response: Response = await client("/api/profile", {method: "POST", body: body});
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success) {
                 const data: UnauthorizedResponse = await response.json();
                 return {success: false, code: data.code, data: data};
             }
-            response = await client("/profile", {method: "POST", body: body});
+            response = await client("/api/profile", {method: "POST", body: body});
         }
         if (!response.ok) {
             const data: ServerErrorResponse | ValidationErrorResponse = await response.json();
@@ -68,12 +68,12 @@ export const update_profile = async (email: string, first_name: string, last_nam
 
 export const get_allowed_user_ids = async (): Promise<ShortUserObject[]> => {
     try {
-        let response: Response = await client("/users_ids", {method: "GET"});
+        let response: Response = await client("/api/users_ids", {method: "GET"});
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success)
                 return [];
-            response = await client("/users_ids", {method: "GET"});
+            response = await client("/api/users_ids", {method: "GET"});
         }
         if (!response.ok)
             return [];
@@ -90,14 +90,14 @@ export const upload_avatar = async (file: File): Promise<{success: boolean, code
     try {
         const form_data = new FormData();
         form_data.append("avatar", file);
-        let response: Response = await client("/profile/avatar", {method: "POST", body: form_data});
+        let response: Response = await client("/api/profile/avatar", {method: "POST", body: form_data});
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success) {
                 const data: UnauthorizedResponse = await response.json();
                 return {success: false, code: data.code, data: data};
             }
-            response = await client("/profile/avatar", {method: "POST", body: form_data});
+            response = await client("/api/profile/avatar", {method: "POST", body: form_data});
         }
         if (!response.ok) {
             const data: ServerErrorResponse = await response.json();

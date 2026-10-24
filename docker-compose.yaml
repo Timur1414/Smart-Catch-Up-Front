@@ -1,0 +1,18 @@
+include:
+  - back/docker-compose.yaml  # заменить на нужный путь
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./back/static:/app/back/static:ro  # заменить на нужный путь
+    networks:
+      - scu-network

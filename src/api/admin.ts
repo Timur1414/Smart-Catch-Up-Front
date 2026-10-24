@@ -9,12 +9,12 @@ import {
 
 export const generate_1 = async (notification_type: string, text: string, user_id: number): Promise<{success: boolean, code: number, data: SimpleResponse | ValidationErrorResponse | ForbiddenResponse | ServerErrorResponse | UnauthorizedResponse}> => {
     const body: string = JSON.stringify({notification_type, text, user_id});
-    return await generate_client("/admin/generate", body);
+    return await generate_client("/api/admin/generate", body);
 };
 
 export const generate_n = async (notification_types: string[], number: number, user_ids: number[]): Promise<{success: boolean, code: number, data: SimpleResponse | ValidationErrorResponse | ForbiddenResponse | ServerErrorResponse | UnauthorizedResponse}> => {
     const body: string = JSON.stringify({notification_types, number, user_ids});
-    return await generate_client("/admin/generate_n", body);
+    return await generate_client("/api/admin/generate_n", body);
 };
 
 const generate_client = async (url: string, body: string): Promise<{success: boolean, code: number, data: SimpleResponse | ValidationErrorResponse | ForbiddenResponse | ServerErrorResponse | UnauthorizedResponse}> => {

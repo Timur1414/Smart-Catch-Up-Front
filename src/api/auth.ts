@@ -102,14 +102,14 @@ export const logout = async (): Promise<{
 
 export const check_login = async (): Promise<boolean> => {
     try {
-        let response: Response = await client("/profile", {
+        let response: Response = await client("/api/profile", {
             method: "GET",
         });
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success)
                 return false;
-            response = await client("/profile", { method: "GET" });
+            response = await client("/api/profile", { method: "GET" });
         }
         return response.ok;
     }
@@ -132,13 +132,13 @@ export const login2FA = async (temp_token: string, code: string) => {
 };
 
 export const setup2FA = async () => {
-    const response: Response = await client("/profile/2fa/setup", { method: "POST" });
+    const response: Response = await client("/api/profile/2fa/setup", { method: "POST" });
     const data: Setup2FAResponse = await response.json();
     return { success: data.code === 200, code: data.code, data };
 };
 
 export const enable2FA = async (code: string, password: string) => {
-    const response: Response = await client("/profile/2fa/enable", {
+    const response: Response = await client("/api/profile/2fa/enable", {
         method: "POST",
         body: JSON.stringify({ code, password }),
     });
@@ -147,7 +147,7 @@ export const enable2FA = async (code: string, password: string) => {
 };
 
 export const disable2FA = async (code: string) => {
-    const response: Response = await client("/profile/2fa/disable", {
+    const response: Response = await client("/api/profile/2fa/disable", {
         method: "POST",
         body: JSON.stringify({ code }),
     });
