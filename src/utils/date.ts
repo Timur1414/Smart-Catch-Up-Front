@@ -56,5 +56,5 @@ export function formatDigestCreationTime(date_input: Date | string): string {
     const month: string | undefined = map.get(date.getMonth());
     if (month === undefined)
         return "";
-    return `${date.getDate() + 1} ${month} : ${date.getHours()} часов ${date.getMinutes()} минут`;
+    return `${date.getDate()} ${month} : ${date.getHours()} часов ${date.getMinutes()} минут`;
 }
