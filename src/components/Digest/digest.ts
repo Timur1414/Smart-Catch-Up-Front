@@ -43,6 +43,7 @@ export class DigestComponent extends BaseComponent {
             });
             component.render(digest_category_root);
         }
+        this.categories.sort((a: CategoryObject, b: CategoryObject): number => a.rank - b.rank);
         for (let i = 0; i < this.categories.length; i++) {
             let component: DigestCategory = new DigestCategory({
                 header: this.categories[i].category_type,

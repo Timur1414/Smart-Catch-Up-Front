@@ -36,4 +36,5 @@ export interface ImportantCategoryObject {
 export interface CategoryObject {
     category_type: string;
     text: string;
+    rank: number;
 }
