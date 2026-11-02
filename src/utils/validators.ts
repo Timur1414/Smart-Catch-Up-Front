@@ -12,16 +12,14 @@ export function validate_email(email: string): {ok: boolean, message: string} {
 export function validate_password(password: string): {ok: boolean, message: string} {
     let has_lower: boolean = false,
         has_upper: boolean = false,
-        has_digit: boolean = false,
-        has_invalid: boolean = false;
+        has_digit: boolean = false;
     for (const symbol of password) {
         if ("a" <= symbol && symbol <= "z") has_lower = true;
         else if ("A" <= symbol && symbol <= "Z") has_upper = true;
         else if ("0" <= symbol && symbol <= "9") has_digit = true;
-        else has_invalid = true;
     }
-    if (password.length < 8 || !has_upper || !has_lower || !has_digit || has_invalid)
-        return {ok: false, message: "Пароль должен содержать заглавные и строчные буквы латинского алфавита и цифры (не менее 8 символов)"};
+    if (password.length < 8 || !has_upper || !has_lower || !has_digit)
+        return {ok: false, message: "Пароль должен содержать заглавные и строчные буквы и цифры (не менее 8 символов)"};
     return {ok: true, message: ""};
 }
 

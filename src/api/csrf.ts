@@ -1,4 +1,4 @@
-export const CSRF_COOKIE_NAME: string = "csrf_token";
+export const CSRF_COOKIE_NAME: string = "__Host-csrf_token";
 
 export function get_csrf_token(): string | null {
     const cookies: string[] = document.cookie.split(";");
