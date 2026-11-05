@@ -2,12 +2,13 @@ import {BaseComponent} from "../base_component.ts";
 import template from "./admin_form_n.hbs?raw";
 import "./admin_form_n.css";
 import {MultiSelectInput} from "../MultiSelectInput/multi_select_input.ts";
+import {MultiSelectInputWithSearch} from "../MultiSelectInputWithSearch/multi_select_input_with_search.ts";
 import {validate_min_value, validate_notification_types, validate_user_ids} from "../../utils/validators.ts";
 import {generate_n} from "../../api/admin.ts";
 import {router} from "../../main.ts";
-import {MultiSelectInputProps, MultiSelectOption} from "../../types/props_interfaces.ts";
-import {get_allowed_notification_types, get_allowed_user_ids} from "../../store/store.ts";
-import {ShortUserObject} from "../../types/objects_interfaces.ts";
+import {MultiSelectInputProps, MultiSelectInputWithSearchProps} from "../../types/props_interfaces.ts";
+import {get_allowed_notification_types} from "../../store/store.ts";
+import {search_users} from "../../api/profile.ts";
 
 export class AdminFormN extends BaseComponent {
     constructor(props: any) {
@@ -31,22 +32,23 @@ export class AdminFormN extends BaseComponent {
         multiselect_types_error.className = "admin_form_n_error";
         multiselect_types_error.id = "admin_form_n_types_error";
         root.appendChild(multiselect_types_error);
-        const users_options: MultiSelectOption[] = [];
-        const users: ShortUserObject[] = get_allowed_user_ids();
-        for (const user of users) {
-            if (user.full_name !== "")
-                users_options.push({
-                    value: user.id,
-                    label: user.full_name,
-                });
-        }
-        const multiselect_users_props: MultiSelectInputProps = {
+
+        const multiselect_users_props: MultiSelectInputWithSearchProps = {
             name: "user_ids",
             label: "Пользователи",
             placeholder: "Пользователи",
-            options: users_options,
+            searchPlaceholder: "Поиск пользователей...",
+            fetchOptions: async (query: string) => {
+                const users = await search_users(query);
+                return users
+                    .filter((u) => u.full_name !== "")
+                    .map((u) => ({
+                        value: u.id,
+                        label: u.full_name,
+                    }));
+            },
         };
-        const multiselect_users_input_component = new MultiSelectInput(multiselect_users_props);
+        const multiselect_users_input_component = new MultiSelectInputWithSearch(multiselect_users_props);
         multiselect_users_input_component.render(root);
         const multiselect_users_error: HTMLParagraphElement = document.createElement("p");
         multiselect_users_error.className = "admin_form_n_error";

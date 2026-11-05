@@ -66,14 +66,15 @@ export const update_profile = async (email: string, first_name: string, last_nam
     }
 }
 
-export const get_allowed_user_ids = async (): Promise<ShortUserObject[]> => {
+export const get_allowed_user_ids = async (query: string): Promise<ShortUserObject[]> => {
     try {
-        let response: Response = await client("/api/users_ids", {method: "GET"});
+        const url = `/api/users_ids?search=${encodeURIComponent(query)}`;
+        let response: Response = await client(url, {method: "GET"});
         if (response.status === 401) {
             const is_refreshed = await refresh();
             if (!is_refreshed.success)
                 return [];
-            response = await client("/api/users_ids", {method: "GET"});
+            response = await client(url, {method: "GET"});
         }
         if (!response.ok)
             return [];
@@ -84,6 +85,10 @@ export const get_allowed_user_ids = async (): Promise<ShortUserObject[]> => {
         console.log(error);
         return [];
     }
+};
+
+export const search_users = async (query: string): Promise<ShortUserObject[]> => {
+    return get_allowed_user_ids(query);
 };
 
 export const upload_avatar = async (file: File): Promise<{success: boolean, code: number, data: UnauthorizedResponse | ServerErrorResponse | UuidResponse }> => {

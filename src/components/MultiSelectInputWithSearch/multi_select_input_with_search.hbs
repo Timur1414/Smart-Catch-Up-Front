@@ -1,0 +1,46 @@
+<div class="multi-select-input-with-search_container{{#if disabled}} multi-select-input-with-search_disabled{{/if}}{{#if error}} multi-select-input-with-search_invalid{{/if}}" data-name="{{name}}">
+    {{#if label}}
+        <label class="multi-select-input-with-search_label">{{label}}</label>
+    {{/if}}
+    <div class="multi-select-input-with-search_control" tabindex="{{#if disabled}}-1{{else}}0{{/if}}" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+        <div class="multi-select-input-with-search_values_wrapper">
+            {{#if selectedItems.length}}
+                {{#each selectedItems}}
+                    <span class="multi-select-input-with-search_tag" data-value="{{this.value}}">
+                        <span class="multi-select-input-with-search_tag_label">{{this.label}}</span>
+                        <button type="button" class="multi-select-input-with-search_tag_remove" data-value="{{this.value}}" aria-label="Удалить {{this.label}}" tabindex="-1">&times;</button>
+                    </span>
+                {{/each}}
+            {{else}}
+                <span class="multi-select-input-with-search_placeholder">{{placeholder}}</span>
+            {{/if}}
+        </div>
+        <img class="multi-select-input-with-search_arrow" src="/icons/arrow.png" alt="arrow">
+    </div>
+    <div class="multi-select-input-with-search_dropdown" role="listbox" aria-multiselectable="true">
+        <div class="multi-select-input-with-search_search_wrapper">
+            <input type="text" class="multi-select-input-with-search_search_input" placeholder="{{searchPlaceholder}}" autocomplete="off">
+        </div>
+        <div class="multi-select-input-with-search_status{{#unless statusText}} is-hidden{{/unless}}">{{statusText}}</div>
+        <ul class="multi-select-input-with-search_options_list">
+            {{#each options}}
+                <li class="multi-select-input-with-search_option{{#if this.isSelected}} multi-select-input-with-search_option_selected{{/if}}" 
+                    data-value="{{this.value}}" 
+                    data-label="{{this.label}}"
+                    role="option"
+                    aria-selected="{{#if this.isSelected}}true{{else}}false{{/if}}">
+                    <span class="multi-select-input-with-search_checkbox">
+                        <svg class="multi-select-input-with-search_checkmark" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M13.485 3.515a1.2 1.2 0 0 1 0 1.697l-6.364 6.364a1.2 1.2 0 0 1-1.697 0L2.515 8.667a1.2 1.2 0 1 1 1.697-1.697l2.06 2.06 5.516-5.515a1.2 1.2 0 0 1 1.697 0z"/>
+                        </svg>
+                    </span>
+                    <span class="multi-select-input-with-search_option_text">{{this.label}}</span>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <input type="hidden" class="multi-select-input-with-search_hidden" name="{{name}}" value="{{selectedValuesString}}">
+    {{#if error}}
+        <p class="multi-select-input-with-search_error">{{error}}</p>
+    {{/if}}
+</div>

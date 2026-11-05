@@ -2,12 +2,13 @@ import {BaseComponent} from "../base_component.ts";
 import template from "./admin_form_1.hbs?raw";
 import "./admin_form_1.css";
 import {SelectInput} from "../SelectInput/select_input.ts";
+import {SelectInputWithSearch} from "../SelectInputWithSearch/select_input_with_search.ts";
 import {validate_not_empty, validate_notification_type, validate_user_id} from "../../utils/validators.ts";
 import {generate_1} from "../../api/admin.ts";
 import {router} from "../../main.ts";
-import { SelectInputProps, SelectOption} from "../../types/props_interfaces.ts";
-import {get_allowed_notification_types, get_allowed_user_ids} from "../../store/store.ts";
-import {ShortUserObject} from "../../types/objects_interfaces.ts";
+import {SelectInputProps, SelectInputWithSearchProps} from "../../types/props_interfaces.ts";
+import {get_allowed_notification_types} from "../../store/store.ts";
+import {search_users} from "../../api/profile.ts";
 
 export class AdminForm1 extends BaseComponent {
     constructor(props: any) {
@@ -31,22 +32,23 @@ export class AdminForm1 extends BaseComponent {
         select_type_error.className = "admin_form_1_error";
         select_type_error.id = "admin_form_1_type_error";
         root.appendChild(select_type_error);
-        const users_options: SelectOption[] = [];
-        const users: ShortUserObject[] = get_allowed_user_ids();
-        for (const user of users) {
-            if (user.full_name !== "")
-                users_options.push({
-                    value: user.id,
-                    label: user.full_name,
-                });
-        }
-        const select_user_input_props: SelectInputProps = {
+
+        const select_user_input_props: SelectInputWithSearchProps = {
             name: "user_id",
             label: "Пользователь",
             placeholder: "Выберите пользователя",
-            options: users_options,
+            searchPlaceholder: "Поиск пользователя...",
+            fetchOptions: async (query: string) => {
+                const users = await search_users(query);
+                return users
+                    .filter((u) => u.full_name !== "")
+                    .map((u) => ({
+                        value: u.id,
+                        label: u.full_name,
+                    }));
+            },
         };
-        const select_user_component = new SelectInput(select_user_input_props);
+        const select_user_component = new SelectInputWithSearch(select_user_input_props);
         select_user_component.render(root);
         const select_user_error: HTMLParagraphElement = document.createElement("p");
         select_user_error.className = "admin_form_1_error";

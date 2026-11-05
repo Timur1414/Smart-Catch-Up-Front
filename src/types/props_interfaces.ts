@@ -40,6 +40,23 @@ export interface MultiSelectInputProps {
     onChange?: (values: string[], options: MultiSelectOption[]) => void;
 }
 
+export interface MultiSelectInputWithSearchProps {
+    name?: string;
+    label?: string;
+    placeholder?: string;
+    options?: (MultiSelectOption | string | number)[];
+    selectedValues?: (string | number)[] | null;
+    disabled?: boolean;
+    error?: string;
+    searchPlaceholder?: string;
+    debounceMs?: number;
+    noResultsText?: string;
+    loadingText?: string;
+    emptyQueryText?: string;
+    fetchOptions?: (query: string) => Promise<(MultiSelectOption | string | number)[]>;
+    onChange?: (values: string[], options: MultiSelectOption[]) => void;
+}
+
 export interface NotificationProps {
     img: string;
     actor: string;
@@ -72,6 +89,23 @@ export interface SelectInputProps {
     selectedValue?: string | number | null;
     disabled?: boolean;
     error?: string;
+    onChange?: (value: string, option: SelectOption | null) => void;
+}
+
+export interface SelectInputWithSearchProps {
+    name?: string;
+    label?: string;
+    placeholder?: string;
+    options?: (SelectOption | string | number)[];
+    selectedValue?: string | number | null;
+    disabled?: boolean;
+    error?: string;
+    searchPlaceholder?: string;
+    debounceMs?: number;
+    noResultsText?: string;
+    loadingText?: string;
+    emptyQueryText?: string;
+    fetchOptions?: (query: string) => Promise<(SelectOption | string | number)[]>;
     onChange?: (value: string, option: SelectOption | null) => void;
 }
 

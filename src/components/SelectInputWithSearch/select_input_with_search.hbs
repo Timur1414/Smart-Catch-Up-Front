@@ -1,0 +1,32 @@
+<div class="select-input-with-search_container{{#if disabled}} select-input-with-search_disabled{{/if}}{{#if error}} select-input-with-search_invalid{{/if}}" data-name="{{name}}">
+    {{#if label}}
+        <label class="select-input-with-search_label">{{label}}</label>
+    {{/if}}
+    <div class="select-input-with-search_control" tabindex="{{#if disabled}}-1{{else}}0{{/if}}" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+        <span class="select-input-with-search_selected_text{{#unless selectedLabel}} select-input-with-search_placeholder{{/unless}}">
+            {{#if selectedLabel}}{{selectedLabel}}{{else}}{{placeholder}}{{/if}}
+        </span>
+        <img class="select-input-with-search_arrow" src="/icons/arrow.png" alt="arrow">
+    </div>
+    <div class="select-input-with-search_dropdown" role="listbox">
+        <div class="select-input-with-search_search_wrapper">
+            <input type="text" class="select-input-with-search_search_input" placeholder="{{searchPlaceholder}}" autocomplete="off">
+        </div>
+        <div class="select-input-with-search_status{{#unless statusText}} is-hidden{{/unless}}">{{statusText}}</div>
+        <ul class="select-input-with-search_options_list">
+            {{#each options}}
+                <li class="select-input-with-search_option{{#if this.isSelected}} select-input-with-search_option_selected{{/if}}" 
+                    data-value="{{this.value}}" 
+                    data-label="{{this.label}}"
+                    role="option"
+                    aria-selected="{{#if this.isSelected}}true{{else}}false{{/if}}">
+                    {{this.label}}
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <input type="hidden" class="select-input-with-search_hidden" name="{{name}}" value="{{selectedValue}}">
+    {{#if error}}
+        <p class="select-input-with-search_error">{{error}}</p>
+    {{/if}}
+</div>
