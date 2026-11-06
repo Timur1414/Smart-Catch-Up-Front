@@ -6,8 +6,12 @@ import {MultiSelectInputWithSearch} from "../MultiSelectInputWithSearch/multi_se
 import {validate_min_value, validate_notification_types, validate_user_ids} from "../../utils/validators.ts";
 import {generate_n} from "../../api/admin.ts";
 import {router} from "../../main.ts";
-import {MultiSelectInputProps, MultiSelectInputWithSearchProps} from "../../types/props_interfaces.ts";
-import {get_allowed_notification_types} from "../../store/store.ts";
+import {
+    MultiSelectInputProps,
+    MultiSelectInputWithSearchProps,
+    MultiSelectOption
+} from "../../types/props_interfaces.ts";
+import {get_allowed_notification_types, translated_types} from "../../store/store.ts";
 import {search_users} from "../../api/profile.ts";
 
 export class AdminFormN extends BaseComponent {
@@ -20,11 +24,22 @@ export class AdminFormN extends BaseComponent {
         const root: HTMLElement | null = container.querySelector<HTMLElement>(".admin_form_n_inputs");
         if (!root)
             return;
+        let select_types_options: MultiSelectOption[] = [];
+        const allowed_notification_types: string[] = get_allowed_notification_types();
+        for (const notification_type of allowed_notification_types) {
+            let label: string | undefined = translated_types.get(notification_type);
+            if (!label)
+                label = notification_type;
+            select_types_options.push({
+                value: notification_type,
+                label: label,
+            });
+        }
         const multiselect_types_props: MultiSelectInputProps = {
             name: "notification_types",
             label: "Типы уведомлений",
             placeholder: "Типы уведомлений",
-            options: get_allowed_notification_types(),
+            options: select_types_options,
         };
         const multiselect_types_input_component = new MultiSelectInput(multiselect_types_props);
         multiselect_types_input_component.render(root);

@@ -1,13 +1,13 @@
 import {BaseComponent} from "../base_component.ts";
 import template from "./profile_edit_form.hbs?raw";
 import "./profile_edit_form.css";
-import {ModalProps, MultiSelectInputProps, ProfileEditProps} from "../../types/props_interfaces.ts";
+import {ModalProps, MultiSelectInputProps, MultiSelectOption, ProfileEditProps} from "../../types/props_interfaces.ts";
 import {validate_email, validate_not_empty, validate_notification_types} from "../../utils/validators.ts";
 import {Modal} from "../Modal/modal.ts";
 import {update_profile} from "../../api/profile.ts";
 import {router} from "../../main.ts";
 import {MultiSelectInput} from "../MultiSelectInput/multi_select_input.ts";
-import {get_allowed_notification_types, get_cur_user} from "../../store/store.ts";
+import {get_allowed_notification_types, get_cur_user, translated_types} from "../../store/store.ts";
 import {UserObject} from "../../types/objects_interfaces.ts";
 
 export class ProfileEditForm extends BaseComponent {
@@ -22,11 +22,22 @@ export class ProfileEditForm extends BaseComponent {
         const user: UserObject | null = get_cur_user();
         if (!user)
             return;
+        let select_important_types_options: MultiSelectOption[] = [];
+        const allowed_notification_types: string[] = get_allowed_notification_types();
+        for (const notification_type of allowed_notification_types) {
+            let label: string | undefined = translated_types.get(notification_type);
+            if (!label)
+                label = notification_type;
+            select_important_types_options.push({
+                value: notification_type,
+                label: label,
+            });
+        }
         const important_types_select_props: MultiSelectInputProps = {
             name: "important_types",
             label: "Типы уведомлений",
             placeholder: "Выберите типы уведомлений",
-            options: get_allowed_notification_types(),
+            options: select_important_types_options,
         }
         const multiselect_important_types: MultiSelectInput = new MultiSelectInput(important_types_select_props);
         multiselect_important_types.render(root);

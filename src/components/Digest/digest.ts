@@ -5,6 +5,7 @@ import {DigestCategory} from "../DigestCategory/digest_category.ts";
 import {DigestProps} from "../../types/props_interfaces.ts";
 import {CategoryObject, ImportantCategoryObject} from "../../types/objects_interfaces.ts";
 import {formatDigestCreationTime} from "../../utils/date.ts";
+import {translated_clusters} from "../../store/store.ts";
 
 
 export class DigestComponent extends BaseComponent {
@@ -45,8 +46,11 @@ export class DigestComponent extends BaseComponent {
         }
         this.categories.sort((a: CategoryObject, b: CategoryObject): number => a.rank - b.rank);
         for (let i = 0; i < this.categories.length; i++) {
+            let header: string | undefined = translated_clusters.get(this.categories[i].category_type);
+            if (!header)
+                header = this.categories[i].category_type
             let component: DigestCategory = new DigestCategory({
-                header: this.categories[i].category_type,
+                header: header,
                 content: this.categories[i].text,
             });
             component.render(digest_category_root);

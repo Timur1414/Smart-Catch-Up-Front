@@ -6,8 +6,8 @@ import {SelectInputWithSearch} from "../SelectInputWithSearch/select_input_with_
 import {validate_not_empty, validate_notification_type, validate_user_id} from "../../utils/validators.ts";
 import {generate_1} from "../../api/admin.ts";
 import {router} from "../../main.ts";
-import {SelectInputProps, SelectInputWithSearchProps} from "../../types/props_interfaces.ts";
-import {get_allowed_notification_types} from "../../store/store.ts";
+import {SelectInputProps, SelectInputWithSearchProps, SelectOption} from "../../types/props_interfaces.ts";
+import {get_allowed_notification_types, translated_types} from "../../store/store.ts";
 import {search_users} from "../../api/profile.ts";
 
 export class AdminForm1 extends BaseComponent {
@@ -20,11 +20,22 @@ export class AdminForm1 extends BaseComponent {
         const root: HTMLElement | null = container.querySelector<HTMLElement>(".admin_form_1_inputs");
         if (!root)
             return;
+        let select_type_options: SelectOption[] = [];
+        const allowed_notification_types: string[] = get_allowed_notification_types();
+        for (const notification_type of allowed_notification_types) {
+            let label: string | undefined = translated_types.get(notification_type);
+            if (!label)
+                label = notification_type;
+            select_type_options.push({
+                value: notification_type,
+                label: label,
+            });
+        }
         const select_type_input_props: SelectInputProps = {
             name: "notification_type",
             label: "Тип уведомления",
             placeholder: "Выберите тип уведомления",
-            options: get_allowed_notification_types(),
+            options: select_type_options,
         };
         const select_type_component = new SelectInput(select_type_input_props);
         select_type_component.render(root);
