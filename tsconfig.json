@@ -24,11 +24,13 @@
     "allowJs": true,
     "types": [
       "vite/client",
+      "chrome"
     ]
   },
   "include": [
     "src",
-    "vite.config.ts"
+    "vite.config.ts",
+    "vite.config.extension.ts"
   ],
   "exclude": [
     "node_modules"

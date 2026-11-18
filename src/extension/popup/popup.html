@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VK Smart Catch-Up</title>
+    <style>
+        body {
+            width: 320px;
+            margin: 0;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #ffffff;
+            color: #222222;
+        }
+        h2 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            color: #0077FF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .desc {
+            font-size: 13px;
+            color: #666666;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            background: #e8f4ff;
+            color: #0077FF;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <h2>
+        <img src="/icons/icon16.png" alt="logo" width="16" height="16">
+        VK Smart Catch-Up
+    </h2>
+    <div class="desc">
+        Умная лента и быстрое погружение в пропущенные события VK.
+    </div>
+    <div class="status-badge" id="status">
+        Расширение активно
+    </div>
+    <script type="module" src="./popup.ts"></script>
+</body>
+</html>
