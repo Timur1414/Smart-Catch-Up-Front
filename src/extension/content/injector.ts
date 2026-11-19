@@ -1,98 +1,147 @@
-import {get_toggle_element} from "../components/Toggle/toggle.ts";
+import { get_toggle_element } from "../components/Toggle/toggle";
+import {
+    create_digest_element,
+    populate_digest_content,
+    set_digest_loading,
+    set_digest_error,
+    DigestData,
+} from "../components/Digest/digest";
 
 const TOGGLE_CONTAINER_ID = "smart-catch-up-toggle-wrap";
+const DIGEST_CONTAINER_ID = "smart-catch-up-digest-wrap";
 const STORAGE_KEY = "smart_catch_up_notifications_enabled";
 
+let cachedDigestData: DigestData | null = null;
 
-export async function injectNotificationToggle(container: HTMLElement): Promise<void> {
+export function updateToggleUi(toggle: HTMLElement, active: boolean): void {
+    const track = toggle.querySelector(".scu-switch-track") as HTMLElement;
+    const thumb = toggle.querySelector(".scu-switch-thumb") as HTMLElement;
+    const iconPath = toggle.querySelector("svg path") as SVGPathElement;
+
+    if (track && thumb && iconPath) {
+        track.style.backgroundColor = active ? "var(--vkui--color_background_accent, #2688eb)" : "var(--vkui--color_icon_tertiary, #555555)";
+        thumb.style.left = active ? "14px" : "2px";
+        iconPath.setAttribute("fill", active ? "var(--vkui--color_icon_accent, #2688eb)" : "var(--vkui--color_icon_secondary, #828282)");
+    }
+}
+
+export function updateDisplayVisibility(active: boolean): void {
+    const notifyList = document.querySelector<HTMLElement>("div[role=list]");
+    const digestContainer = document.getElementById(DIGEST_CONTAINER_ID);
+
+    if (notifyList) {
+        notifyList.style.display = active ? "none" : "";
+    }
+    if (digestContainer) {
+        digestContainer.style.display = active ? "block" : "none";
+    }
+}
+
+function ensureDigestContainer(notifyList?: HTMLElement | null): HTMLElement {
+    let digestContainer = document.getElementById(DIGEST_CONTAINER_ID);
+    if (!digestContainer) {
+        digestContainer = create_digest_element();
+        const list = notifyList ?? document.querySelector<HTMLElement>("div[role=list]");
+        if (list) {
+            list.insertAdjacentElement("afterend", digestContainer);
+        }
+    }
+    return digestContainer;
+}
+
+export async function fetchAndRenderDigest(notifyList?: HTMLElement | null): Promise<void> {
+    const digestContainer = ensureDigestContainer(notifyList);
+    set_digest_loading(digestContainer);
+
+    try {
+        const response = await chrome.runtime.sendMessage({
+            type: "SET_NOTIFICATION_STATUS",
+            enabled: true,
+        });
+
+        if (!response?.success) {
+            console.error(`[VK Smart Catch-Up] Server error or request failed`, response);
+            set_digest_error(digestContainer, "Не удалось загрузить дайджест");
+            return;
+        }
+
+        const data: DigestData = response.data?.data ?? response.data;
+        cachedDigestData = data;
+        populate_digest_content(digestContainer, data);
+    } catch (error: any) {
+        console.error("[VK Smart Catch-Up] Error fetching digest:", error);
+        set_digest_error(digestContainer, "Ошибка при получении дайджеста");
+    }
+}
+
+export async function syncNotificationState(): Promise<void> {
+    const data = await chrome.storage.local.get([STORAGE_KEY]);
+    const isEnabled: boolean = Boolean(data[STORAGE_KEY] ?? false);
+
+    const toggle = document.getElementById(TOGGLE_CONTAINER_ID);
+    if (toggle) {
+        updateToggleUi(toggle, isEnabled);
+    }
+
+    const notifyList = document.querySelector<HTMLElement>("div[role=list]");
+    ensureDigestContainer(notifyList);
+    updateDisplayVisibility(isEnabled);
+
+    if (isEnabled && !cachedDigestData) {
+        await fetchAndRenderDigest(notifyList);
+    }
+}
+
+export async function injectNotificationToggle(
+    container: HTMLElement,
+    notifyList?: HTMLElement | null
+): Promise<void> {
     if (document.getElementById(TOGGLE_CONTAINER_ID)) {
+        await syncNotificationState();
         return;
     }
+
     const data = await chrome.storage.local.get([STORAGE_KEY]);
     let is_enabled: boolean = Boolean(data[STORAGE_KEY] ?? false);
 
     const toggle: HTMLDivElement = get_toggle_element(is_enabled);
-    // const toggle: HTMLDivElement = document.createElement('div');
-    // toggle.id = TOGGLE_CONTAINER_ID;
-    // toggle.setAttribute('role', 'button');
-    // toggle.setAttribute('tabindex', '0');
-    // toggle.setAttribute('title', 'Smart Catch-Up: умный фильтр уведомлений');
-    // toggle.style.cssText = `
-    //     display: inline-flex;
-    //     align-items: center;
-    //     gap: 6px;
-    //     padding: 4px 8px;
-    //     margin-right: 8px;
-    //     cursor: pointer;
-    //     user-select: none;
-    //     border-radius: 8px;
-    //     background: var(--vkui--color_background_secondary, rgba(0, 0, 0, 0.05));
-    //     transition: all 0.2s ease;
-    //     z-index: 999;
-    //     flex-shrink: 0;
-    // `;
-    // toggle.innerHTML = `
-    //     <span style="
-    //         font-size: 12px;
-    //         font-weight: 600;
-    //         color: var(--vkui--color_text_subhead, #6f7985);
-    //         display: inline-flex;
-    //         align-items: center;
-    //         gap: 4px;
-    //         line-height: 1;
-    //     ">
-    //         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-    //             <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="${is_enabled ? '#0077FF' : '#99a2ad'}"/>
-    //         </svg>
-    //         Catch-Up
-    //     </span>
-    //     <div class="scu-switch-track" style="
-    //         position: relative;
-    //         width: 28px;
-    //         height: 16px;
-    //         background-color: ${is_enabled ? '#0077FF' : '#b2b6ba'};
-    //         border-radius: 8px;
-    //         transition: background-color 0.2s ease;
-    //         flex-shrink: 0;
-    //     ">
-    //         <div class="scu-switch-thumb" style="
-    //             position: absolute;
-    //             top: 2px;
-    //             left: ${is_enabled ? '14px' : '2px'};
-    //             width: 12px;
-    //             height: 12px;
-    //             background-color: #ffffff;
-    //             border-radius: 50%;
-    //             transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    //             box-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    //         "></div>
-    //     </div>
-    // `;
 
-    function updateUi(active: boolean) {
-        const track = toggle.querySelector('.scu-switch-track') as HTMLElement;
-        const thumb = toggle.querySelector('.scu-switch-thumb') as HTMLElement;
-        const iconPath = toggle.querySelector('svg path') as SVGPathElement;
+    ensureDigestContainer(notifyList);
+    updateDisplayVisibility(is_enabled);
 
-        if (track && thumb && iconPath) {
-            track.style.backgroundColor = active ? '#0077FF' : '#b2b6ba';
-            thumb.style.left = active ? '14px' : '2px';
-            iconPath.setAttribute('fill', active ? '#0077FF' : '#99a2ad');
-        }
+    if (is_enabled) {
+        fetchAndRenderDigest(notifyList);
     }
 
     toggle.addEventListener("click", async (e) => {
         e.stopPropagation();
         e.preventDefault();
         is_enabled = !is_enabled;
-        updateUi(is_enabled);
+
+        updateToggleUi(toggle, is_enabled);
+        updateDisplayVisibility(is_enabled);
         await chrome.storage.local.set({ [STORAGE_KEY]: is_enabled });
+
         console.log("[VK Smart Catch-Up] Notifications toggle is now:", is_enabled ? "ON" : "OFF");
+
         window.dispatchEvent(
             new CustomEvent("scu_notifications_toggle_change", {
                 detail: { enabled: is_enabled },
             })
         );
+
+        if (is_enabled) {
+            await fetchAndRenderDigest(notifyList);
+        } else {
+            try {
+                await chrome.runtime.sendMessage({
+                    type: "SET_NOTIFICATION_STATUS",
+                    enabled: false,
+                });
+            } catch (err) {
+                console.warn("[VK Smart Catch-Up] Failed to notify background about toggle off", err);
+            }
+        }
     });
 
     const computedDisplay: string = window.getComputedStyle(container).display;

@@ -13,7 +13,7 @@ export function get_toggle_element(isEnabled: boolean): HTMLDivElement {
         cursor: pointer;
         user-select: none;
         border-radius: 8px;
-        background: var(--vkui--color_background_secondary, rgba(0, 0, 0, 0.05));
+        background: var(--vkui--color_background_secondary, rgba(255, 255, 255, 0.08));
         transition: all 0.2s ease;
         z-index: 999;
         flex-shrink: 0;
@@ -22,14 +22,14 @@ export function get_toggle_element(isEnabled: boolean): HTMLDivElement {
         <span style="
             font-size: 12px;
             font-weight: 600;
-            color: var(--vkui--color_text_subhead, #6f7985);
+            color: var(--vkui--color_text_subhead, #828282);
             display: inline-flex;
             align-items: center;
             gap: 4px;
             line-height: 1;
         ">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="${isEnabled ? '#0077FF' : '#99a2ad'}"/>
+                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="${isEnabled ? 'var(--vkui--color_icon_accent, #2688eb)' : 'var(--vkui--color_icon_secondary, #828282)'}"/>
             </svg>
             Catch-Up
         </span>
@@ -37,7 +37,7 @@ export function get_toggle_element(isEnabled: boolean): HTMLDivElement {
             position: relative;
             width: 28px;
             height: 16px;
-            background-color: ${isEnabled ? '#0077FF' : '#b2b6ba'};
+            background-color: ${isEnabled ? 'var(--vkui--color_background_accent, #2688eb)' : 'var(--vkui--color_icon_tertiary, #555555)'};
             border-radius: 8px;
             transition: background-color 0.2s ease;
             flex-shrink: 0;

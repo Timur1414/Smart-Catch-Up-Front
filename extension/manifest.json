@@ -3,6 +3,7 @@
   "name": "VK Smart Catch-Up",
   "version": "1.0.0",
   "description": "VK Smart Catch-Up",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv0H0Ly59pMOD+fRAQDVMZJhg7IaYhUtTpyO8KZSJQ6mhMwDaymh4sVXqZ/HTOL3isVKbFAJiWVU95EkbNNpUZZyHzjVbvU+e0Dix0C5GODVSdoRJfcTRoFgh3BpgcMzZehTyOWsffKW4Mg8R66Wz1q/rH2MEoJWaLs1y4+3EFzgsx3egXx6QxTxG2Q0SjAUpH8oLXYfdlkhOIMiKs9VKMAC8XHcTUhufI2JGYr6ZUXIr2C7HiV5v3Aoq+3XyvyCOSD/XrTq6SKBMqu/XLnvs9PRrKe2cwDN8ObyyQKFFeyWqhYvVAYZnFGRn+lf8Ufk8I07YRwDtZhQXQdhyt6Ch8wIDAQAB",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
