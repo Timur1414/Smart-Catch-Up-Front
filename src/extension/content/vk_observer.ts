@@ -1,56 +1,40 @@
 import { injectNotificationToggle } from "./injector";
 
 
-// function findNotificationHeader(): HTMLElement | null {
-//     const candidates = document.querySelectorAll<HTMLElement>("span, div, h1, h2, h3, h4");
-//     for (const el of candidates) {
-//         if (el.children.length === 0 && el.textContent?.trim() === "Уведомления" && el.offsetParent !== null) {
-//             const btnOrTitle = el.closest<HTMLElement>("button, [role='button'], [class*='vkit-']") || el.parentElement;
-//             if (btnOrTitle && btnOrTitle.parentElement) {
-//                 console.log("[VK Smart Catch-Up] elem:", el);
-//                 return btnOrTitle.parentElement;
-//             }
-//         }
-//     }
-//     return null;
-// }
-
-function tryInject(): void {
-    if (document.getElementById("smart-catch-up-toggle-wrap")) {
-        return;
+async function try_inject(): Promise<boolean> {
+    if (document.getElementById("smart-catch-up-toggle-wrap"))
+        return true;
+    const notify_list: HTMLElement | null = document.querySelector<HTMLElement>("div[role=list]");
+    if (notify_list?.parentElement?.parentElement) {
+        await injectNotificationToggle(notify_list.parentElement);
+        return true;
     }
-
-    // const headerBar = findNotificationHeader();
-    const headerBar = document.querySelector<HTMLElement>("div[role=list]");
-    if (headerBar?.parentElement?.parentElement) {
-        injectNotificationToggle(headerBar.parentElement);
-    }
+    return false;
 }
 
 
-export function initVKObserver(): void {
+export function init_VK_observer(): void {
     // console.log("[VK Smart Catch-Up] Observer active, waiting for notifications section...");
-    // tryInject();
+    // try_inject();
     // const observer = new MutationObserver(() => {
-    //     tryInject();
+    //     try_inject();
     // });
     // observer.observe(document.body, {
     //     childList: true,
     //     subtree: true,
     // });
 
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", async (e) => {
         const target = e.target as HTMLElement | null;
         if (!target) return;
-        const isBellClick = Boolean(
+        const is_bell_clicked: boolean = Boolean(
             target.parentElement?.firstChild?.textContent === "Уведомления" || target.firstChild?.textContent === "Уведомления"
         );
-        if (isBellClick) {
+        if (is_bell_clicked) {
             console.log("[VK Smart Catch-Up] Bell clicked");
-            setTimeout(tryInject, 50);
-            setTimeout(tryInject, 150);
-            setTimeout(tryInject, 300);
-            setTimeout(tryInject, 500);
+            while (!(await try_inject())) {
+                setInterval(() => {}, 100);
+            }
         }
     }, true);
 }

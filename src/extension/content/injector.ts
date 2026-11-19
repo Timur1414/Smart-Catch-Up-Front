@@ -1,80 +1,78 @@
-const TOGGLE_CONTAINER_ID = 'smart-catch-up-toggle-wrap';
-const STORAGE_KEY = 'smart_catch_up_notifications_enabled';
+import {get_toggle_element} from "../components/Toggle/toggle.ts";
 
-/**
- * Создает и встраивает стилизованный toggle в шапку выпадающей панели колокольчика VK
- */
-export async function injectNotificationToggle(headerBar: HTMLElement): Promise<void> {
+const TOGGLE_CONTAINER_ID = "smart-catch-up-toggle-wrap";
+const STORAGE_KEY = "smart_catch_up_notifications_enabled";
+
+
+export async function injectNotificationToggle(container: HTMLElement): Promise<void> {
     if (document.getElementById(TOGGLE_CONTAINER_ID)) {
         return;
     }
-
     const data = await chrome.storage.local.get([STORAGE_KEY]);
-    let isEnabled: boolean = Boolean(data[STORAGE_KEY] ?? false);
+    let is_enabled: boolean = Boolean(data[STORAGE_KEY] ?? false);
 
-    const toggleWrapper = document.createElement('div');
-    toggleWrapper.id = TOGGLE_CONTAINER_ID;
-    toggleWrapper.setAttribute('role', 'button');
-    toggleWrapper.setAttribute('tabindex', '0');
-    toggleWrapper.setAttribute('title', 'Smart Catch-Up: умный фильтр уведомлений');
-
-    toggleWrapper.style.cssText = `
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 8px;
-        margin-right: 8px;
-        cursor: pointer;
-        user-select: none;
-        border-radius: 8px;
-        background: var(--vkui--color_background_secondary, rgba(0, 0, 0, 0.05));
-        transition: all 0.2s ease;
-        z-index: 999;
-        flex-shrink: 0;
-    `;
-
-    toggleWrapper.innerHTML = `
-        <span style="
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--vkui--color_text_subhead, #6f7985);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            line-height: 1;
-        ">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="${isEnabled ? '#0077FF' : '#99a2ad'}"/>
-            </svg>
-            Catch-Up
-        </span>
-        <div class="scu-switch-track" style="
-            position: relative;
-            width: 28px;
-            height: 16px;
-            background-color: ${isEnabled ? '#0077FF' : '#b2b6ba'};
-            border-radius: 8px;
-            transition: background-color 0.2s ease;
-            flex-shrink: 0;
-        ">
-            <div class="scu-switch-thumb" style="
-                position: absolute;
-                top: 2px;
-                left: ${isEnabled ? '14px' : '2px'};
-                width: 12px;
-                height: 12px;
-                background-color: #ffffff;
-                border-radius: 50%;
-                transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            "></div>
-        </div>
-    `;
+    const toggle: HTMLDivElement = get_toggle_element(is_enabled);
+    // const toggle: HTMLDivElement = document.createElement('div');
+    // toggle.id = TOGGLE_CONTAINER_ID;
+    // toggle.setAttribute('role', 'button');
+    // toggle.setAttribute('tabindex', '0');
+    // toggle.setAttribute('title', 'Smart Catch-Up: умный фильтр уведомлений');
+    // toggle.style.cssText = `
+    //     display: inline-flex;
+    //     align-items: center;
+    //     gap: 6px;
+    //     padding: 4px 8px;
+    //     margin-right: 8px;
+    //     cursor: pointer;
+    //     user-select: none;
+    //     border-radius: 8px;
+    //     background: var(--vkui--color_background_secondary, rgba(0, 0, 0, 0.05));
+    //     transition: all 0.2s ease;
+    //     z-index: 999;
+    //     flex-shrink: 0;
+    // `;
+    // toggle.innerHTML = `
+    //     <span style="
+    //         font-size: 12px;
+    //         font-weight: 600;
+    //         color: var(--vkui--color_text_subhead, #6f7985);
+    //         display: inline-flex;
+    //         align-items: center;
+    //         gap: 4px;
+    //         line-height: 1;
+    //     ">
+    //         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
+    //             <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="${is_enabled ? '#0077FF' : '#99a2ad'}"/>
+    //         </svg>
+    //         Catch-Up
+    //     </span>
+    //     <div class="scu-switch-track" style="
+    //         position: relative;
+    //         width: 28px;
+    //         height: 16px;
+    //         background-color: ${is_enabled ? '#0077FF' : '#b2b6ba'};
+    //         border-radius: 8px;
+    //         transition: background-color 0.2s ease;
+    //         flex-shrink: 0;
+    //     ">
+    //         <div class="scu-switch-thumb" style="
+    //             position: absolute;
+    //             top: 2px;
+    //             left: ${is_enabled ? '14px' : '2px'};
+    //             width: 12px;
+    //             height: 12px;
+    //             background-color: #ffffff;
+    //             border-radius: 50%;
+    //             transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    //             box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    //         "></div>
+    //     </div>
+    // `;
 
     function updateUi(active: boolean) {
-        const track = toggleWrapper.querySelector('.scu-switch-track') as HTMLElement;
-        const thumb = toggleWrapper.querySelector('.scu-switch-thumb') as HTMLElement;
-        const iconPath = toggleWrapper.querySelector('svg path') as SVGPathElement;
+        const track = toggle.querySelector('.scu-switch-track') as HTMLElement;
+        const thumb = toggle.querySelector('.scu-switch-thumb') as HTMLElement;
+        const iconPath = toggle.querySelector('svg path') as SVGPathElement;
 
         if (track && thumb && iconPath) {
             track.style.backgroundColor = active ? '#0077FF' : '#b2b6ba';
@@ -83,31 +81,26 @@ export async function injectNotificationToggle(headerBar: HTMLElement): Promise<
         }
     }
 
-    toggleWrapper.addEventListener('click', async (e) => {
+    toggle.addEventListener("click", async (e) => {
         e.stopPropagation();
         e.preventDefault();
-        isEnabled = !isEnabled;
-        updateUi(isEnabled);
-
-        await chrome.storage.local.set({ [STORAGE_KEY]: isEnabled });
-        console.log('[VK Smart Catch-Up] Notifications toggle is now:', isEnabled ? 'ON' : 'OFF');
-
+        is_enabled = !is_enabled;
+        updateUi(is_enabled);
+        await chrome.storage.local.set({ [STORAGE_KEY]: is_enabled });
+        console.log("[VK Smart Catch-Up] Notifications toggle is now:", is_enabled ? "ON" : "OFF");
         window.dispatchEvent(
-            new CustomEvent('scu_notifications_toggle_change', {
-                detail: { enabled: isEnabled },
+            new CustomEvent("scu_notifications_toggle_change", {
+                detail: { enabled: is_enabled },
             })
         );
     });
 
-    // Убедимся, что контейнер шапки ведет себя как flexbox
-    const computedDisplay = window.getComputedStyle(headerBar).display;
-    if (computedDisplay !== 'flex' && computedDisplay !== 'inline-flex') {
-        headerBar.style.display = 'flex';
-        headerBar.style.alignItems = 'center';
+    const computedDisplay: string = window.getComputedStyle(container).display;
+    if (computedDisplay !== "flex" && computedDisplay !== "inline-flex") {
+        container.style.display = "flex";
+        container.style.alignItems = "center";
     }
+    container.prepend(toggle);
 
-    // Вставляем первым дочерним элементом
-    headerBar.prepend(toggleWrapper);
-
-    console.log('[VK Smart Catch-Up] Successfully injected toggle into header bar:', headerBar);
+    console.log("[VK Smart Catch-Up] Successfully injected toggle into header bar:", container);
 }
