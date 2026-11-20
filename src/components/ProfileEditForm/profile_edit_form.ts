@@ -35,7 +35,7 @@ export class ProfileEditForm extends BaseComponent {
         }
         const important_types_select_props: MultiSelectInputProps = {
             name: "important_types",
-            label: "Типы уведомлений",
+            label: "Важные типы уведомлений",
             placeholder: "Выберите типы уведомлений",
             options: select_important_types_options,
         }
