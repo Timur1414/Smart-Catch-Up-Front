@@ -31,7 +31,7 @@ export function get_toggle_element(isEnabled: boolean): HTMLDivElement {
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
                 <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="${isEnabled ? 'var(--vkui--color_icon_accent, #2688eb)' : 'var(--vkui--color_icon_secondary, #828282)'}"/>
             </svg>
-            Catch-Up
+            Smart Catch-Up
         </span>
         <div class="scu-switch-track" style="
             position: relative;
