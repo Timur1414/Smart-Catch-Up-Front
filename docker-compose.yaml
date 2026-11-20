@@ -11,8 +11,22 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    depends_on:
+      api-gateway:
+        condition: service_healthy
     volumes:
       - ./ssl:/etc/nginx/ssl:ro
       - ./back/static:/app/back/static:ro  # заменить на нужный путь
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot:ro
+    networks:
+      - scu-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     networks:
       - scu-network
